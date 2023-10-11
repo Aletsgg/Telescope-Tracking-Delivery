@@ -1,0 +1,115 @@
+﻿@model Telescope_Traking_Delivery.Models.ViewModels.CancelacionVM;
+@{
+    ViewData["Title"] = "Cancelacion_Detalle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="form-elements-wrapper fa-align-center">
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            <!-- input style start -->
+            <div class="card-style mb-30">
+
+                @if (Model.oCancelacion.IdCancelation == 0)
+                {
+                    <h6 class="input-style-25">Registrar una nueva cancelacion</h6>
+                }
+                else
+                {
+                    <h6 class="input-style-25"> Editar el Pedido</h6>
+                }
+
+                <form asp-action="Cancelacion_Detalle" asp-controller="Cancelacion" method="post">
+                    <input type="hidden" asp-for="oCancelacion.IdCancelation" />
+
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="oCancelacion.IdClient">Cliente</label>
+                        <select class="form-select form-select-sm" asp-for="oCancelacion.IdClient" asp-items="@Model.oListaClient" required>
+                        </select>
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="oCancelacion.IdOrders">NUMERO DE PEDIDO/DELIVERY</label>
+                        <select class="form-select form-select-sm" asp-for="oCancelacion.IdOrders" asp-items="@Model.oListaOrder" required>
+                        </select>
+                    </div>
+
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="oCancelacion.Entrega">ENTREGA</label>
+                        <input class="form-control form-control-sm" asp-for="oCancelacion.Entrega" type="text" required />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="oCancelacion.Factura">FACTURA</label>
+                        <input class="form-control form-control-sm" asp-for="oCancelacion.Factura" type="text" required />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="oCancelacion.Pedido">PEDIDO</label>
+                        <input class="form-control form-control-sm" asp-for="oCancelacion.Pedido" type="text" required />
+                    </div>
+                    <div class="input-style-2 ui-datepicker">
+                        <label class="form-label" asp-for="oCancelacion.Sku">SKU</label>
+                        <input class="form-control form-control-sm" asp-for="oCancelacion.Sku" type="text" required />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="oCancelacion.Producto">PRODUCTO</label>
+                        <input class="form-control form-control-sm" asp-for="oCancelacion.Producto" type="text" required />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="oCancelacion.Lote">LOTE</label>
+                        <input class="form-control form-control-sm" asp-for="oCancelacion.Lote" type="text" required />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="oCancelacion.Caducidad">CADUCIDAD</label>
+                        <input class="form-control form-control-sm" asp-for="oCancelacion.Caducidad" type="text" required />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="oCancelacion.Motivo">MOTIVO</label>
+                        <input class="form-control form-control-sm" asp-for="oCancelacion.Motivo" type="text" required />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" for="typeNumber" asp-for="oCancelacion.OriginalResto">ORIGINAL / RESTO</label>
+                        <input class="form-control form-control-sm" asp-for="oCancelacion.OriginalResto" type="text" required />
+                    </div>
+                    <div class="input-style-2" hidden>
+                        <label class="form-label" asp-for="oCancelacion.FechaRegistro">Fecha y Hora de Registro</label>
+                        <input class="form-control form-control-sm" asp-for="oCancelacion.FechaRegistro" type="datetime" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+                    </div>
+
+                    <div class="input-style-2">
+
+                        @if (Model.oCancelacion.IdCancelation == 0)
+                        {
+                            <button class="btn btn-primary btn-sm w-45" type="submit">Crear</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-primary btn-sm w-45" type="submit">Actualizar</button>
+
+                        }
+                        <a class="btn btn-dark btn-sm" asp-action="Index" asp-controller="Cancelacion">Volver</a>
+
+                    </div>
+
+                </form>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+@section Scripts{
+
+
+
+}

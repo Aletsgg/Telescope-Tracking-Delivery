@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewData["Title"] = "MostrarDatos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card-style mb-30">
+            <h6 class="mb-10">Mostrar Datos</h6>
+            <p class="text-sm mb-20">
+                Seleccione el archivo con los registros que desee cargar al sistema.
+            </p>
+            <ul class="buttons-group">
+                <li>
+                    <input class="form-control-file" type="file" id="inputExcel" required />
+                </li>
+                <li>
+                    <button class="btn btn-warning" onclick="mostrarDatos()">Mostrar Datos</button>
+                </li>
+                <li>
+                    <button class="btn btn-success" onclick="enviarDatos()">Enviar Datos a BD</button>
+                </li>
+            </ul>
+            <div class="table-wrapper table-responsive">
+
+                <table id="tbData" class="table">
+
+
+                    <thead>
+                        <tr>
+                            <th><h5>ID</h5></th>
+                            <th><h5>CLIENTE</h5></th>
+                            <th><h5>NUMERO DE PEDIDO/DELIVERY</h5></th>
+                            <th><h5>ENTREGA</h5></th>
+                            <th><h5>FACTURA</h5></th>
+                            <th><h5>PEDIDO</h5></th>
+                            <th><h5>SKU</h5></th>
+                            <th><h5>PRODUCTO</h5></th>
+                            <th><h5>LOTE</h5></th>
+                            <th><h5>CADUCIDAD</h5></th>
+                            <th><h5>MOTIVO</h5></th>
+                            <th><h5>ORIGINAL / RESTO</h5></th>
+                            <th><h5>FECHA DE REGISTRO O MODIFICACION</h5></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <!-- end table -->
+            </div>
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col -->
+</div>
+<!-- end row -->
+@section Scripts{
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+
+        function mostrarDatos() {
+            const input = document.getElementById("inputExcel")
+
+            const formData = new FormData()
+
+            formData.append("ArchivoExcel", input.files[0])
+
+            fetch("MostrarDatos", {
+                method: "POST",
+                body: formData
+            })
+                .then((response) => { return response.json() })
+                .then((dataJson) => {
+                    console.log(dataJson)
+
+
+                    dataJson.forEach((item) => {
+                        $("#tbData tbody").append(
+                            $("<tr>").append(
+                                $("<td>").text(item.idClient),
+                                $("<td>").text(item.idOrders),
+                                $("<td>").text(item.entrega),
+                                $("<td>").text(item.factura),
+                                $("<td>").text(item.pedido),
+                                $("<td>").text(item.sku),
+                                $("<td>").text(item.producto),
+                                $("<td>").text(item.lote),
+                                $("<td>").text(item.caducidad),
+                                $("<td>").text(item.motivo),
+                                $("<td>").text(item.originalResto),
+                                $("<td>").text(item.fechaRegistro)
+
+                            )
+
+                        )
+                    })
+
+                })
+
+
+        }
+
+
+        function enviarDatos() {
+            const input = document.getElementById("inputExcel")
+
+            const formData = new FormData()
+
+            formData.append("ArchivoExcel", input.files[0])
+
+            fetch("EnviarDatos", {
+                method: "POST",
+                body: formData
+            })
+                .then((response) => { return response.json() })
+                .then((dataJson) => {
+
+                    alert(dataJson.mensaje);
+
+                })
+
+
+        }
+
+
+    </script>
+
+}

@@ -1,0 +1,145 @@
+﻿@{
+    ViewData["Title"] = "MostrarDatos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card-style mb-30">
+            <h6 class="mb-10">Mostrar Datos</h6>
+            <p class="text-sm mb-20">
+                Seleccione el archivo con los registros que desee cargar al sistema.
+            </p>
+            <ul class="buttons-group">
+                <li>
+                    <input class="form-control-file" type="file" id="inputExcel" required />
+                </li>
+                <li>
+                    <button class="btn btn-warning" onclick="mostrarDatos()">Mostrar Datos</button>
+                </li>
+                <li>
+                    <button class="btn btn-success" onclick="enviarDatos()">Enviar Datos a BD</button>
+                </li>
+            </ul>
+            <div class="table-wrapper table-responsive">
+
+                <table id="tbData" class="table">
+
+
+                    <thead>
+                        <tr>
+                            <th>SITE(Carga)</th>
+                            <th>PEDIDO/DELIVERY</th>
+                            <th>FECHA Y HORA CITADO A EMBARQUE</th>
+                            <th>FECHA Y HORA DE EMBARQUE</th>
+                            <th>OT DE EMBARQUE</th>
+                            <th>CONTROL VEHICULAR</th>
+                            <th>DESTINO</th>
+                            <th>FECHA Y HORA CITA DE ENTREGA</th>
+                            <th>PIEZAS</th>
+                            <th>FECHA Y HORA DE LLEGADA A DESCARGA	</th>
+                            <th>ON TIME CON CLIENTE	</th>
+                            <th>ESTATUS DE ENTREGA</th>
+                            <th>OBSERVACIONES</th>
+                            <th>CLIENTE</th>
+                            <th>TIPO DE PEDIDO</th>
+                            <th>TRANSPORTE</th>
+                            <th>TRANPORTISTA</th>
+                            <th>CONFIRMACION</th>
+                            <th>FECHA Y HORA DE FINALIZACION</th>
+                            <th>QUIEN REGISTRA</th>
+                            <th>FECHA Y HORA DE REGISTRO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <!-- end table -->
+            </div>
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col -->
+</div>
+<!-- end row -->
+@section Scripts{
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+
+        function mostrarDatos() {
+            const input = document.getElementById("inputExcel")
+
+            const formData = new FormData()
+
+            formData.append("ArchivoExcel", input.files[0])
+
+            fetch("MostrarDatos", {
+                method: "POST",
+                body: formData
+            })
+                .then((response) => { return response.json() })
+                .then((dataJson) => {
+                    console.log(dataJson)
+
+
+                    dataJson.forEach((item) => {
+                        $("#tbData tbody").append(
+                            $("<tr>").append(
+                                $("<td>").text(item.siteLoading),
+                                $("<td>").text(item.ordersDelivery),
+                                $("<td>").text(item.dtAppointedForShipment),
+                                $("<td>").text(item.dtOfBoarding),
+                                $("<td>").text(item.otOfBoarding),
+                                $("<td>").text(item.vehicleControl),
+                                $("<td>").text(item.destination),
+                                $("<td>").text(item.dtDeliveryAppointment),
+                                $("<td>").text(item.pieces),
+                                $("<td>").text(item.dtArrivalToUnload),
+                                $("<td>").text(item.onTime),
+                                $("<td>").text(item.deliveryStatus),
+                                $("<td>").text(item.obsevations),
+                                $("<td>").text(item.idClient),
+                                $("<td>").text(item.idTypeOrders),
+                                $("<td>").text(item.idTransport),
+                                $("<td>").text(item.idTransportist),
+                                $("<td>").text(item.confirmation),
+                                $("<td>").text(item.endDateTime),
+                                $("<td>").text(item.idUsuario),
+                                $("<td>").text(item.fechaRegistro)
+
+                            )
+
+                        )
+                    })
+
+                })
+
+
+        }
+
+
+        function enviarDatos() {
+            const input = document.getElementById("inputExcel")
+
+            const formData = new FormData()
+
+            formData.append("ArchivoExcel", input.files[0])
+
+            fetch("EnviarDatos", {
+                method: "POST",
+                body: formData
+            })
+                .then((response) => { return response.json() })
+                .then((dataJson) => {
+
+                    alert(dataJson.mensaje);
+
+                })
+
+
+        }
+
+
+    </script>
+
+}

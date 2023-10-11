@@ -1,0 +1,84 @@
+﻿@model Telescope_Traking_Delivery.Models.Cancelacion;
+
+@{
+    ViewData["Title"] = "Eliminar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="form-elements-wrapper fa-align-center">
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            <!-- input style start -->
+            <div class="card-style mb-30">
+
+
+                <h6 class="input-style-25">Eliminar registro de Cancelacion</h6>
+                <form asp-action="Eliminar" asp-controller="Cancelacion" method="post">
+                    <input type="hidden" asp-for="IdCancelation" />
+
+                    <div class="mb-2">
+                        <label class="form-label" asp-for="IdClient">Cliente</label>
+                        <input class="form-control form-control-sm" asp-for="IdClientNavigation.ClientName" type="text" disabled />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label" asp-for="IdOrders">NUMERO DE PEDIDO/DELIVERY</label>
+                        <input class="form-control form-control-sm" asp-for="IdOrdersNavigation.OrdersDelivery" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="Entrega">ENTREGA</label>
+                        <input class="form-control form-control-sm" asp-for="Entrega" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="Factura">FACTURA</label>
+                        <input class="form-control form-control-sm" asp-for="Factura" type="text" disabled />
+                    </div>
+                    <div class="input-style-2 ui-datepicker">
+                        <label class="form-label" asp-for="Pedido">PEDIDO</label>
+                        <input class="form-control form-control-sm" asp-for="Pedido" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="Sku">SKU</label>
+                        <input class="form-control form-control-sm" asp-for="Sku" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="Producto">PRODUCTO</label>
+                        <input class="form-control form-control-sm" asp-for="Producto" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="Lote">LOTE</label>
+                        <input class="form-control form-control-sm" asp-for="Lote" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="Caducidad">CADUCIDAD</label>
+                        <input class="form-control form-control-sm" asp-for="Caducidad" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="Motivo">MOTIVO</label>
+                        <input class="form-control form-control-sm" asp-for="Motivo" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="OriginalResto">ORIGINAL / RESTO</label>
+                        <input class="form-control form-control-sm" asp-for="OriginalResto" type="text" disabled />
+                    </div>
+
+
+                    <div class="mb-2">
+
+                        <button class="btn btn-danger btn-sm w-25" type="submit">Eliminar</button>
+                        <a class="btn btn-dark btn-sm" asp-action="Index" asp-controller="Cancelacion">Volver</a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

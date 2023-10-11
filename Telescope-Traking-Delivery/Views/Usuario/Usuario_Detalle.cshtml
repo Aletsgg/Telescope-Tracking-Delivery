@@ -1,0 +1,110 @@
+﻿@model Telescope_Traking_Delivery.Models.ViewModels.UsuarioVM;
+
+@{
+    ViewData["Title"] = "Usuario_Detalle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Estilos{
+}
+
+<div class="form-elements-wrapper fa-align-center">
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            <!-- input style start -->
+            <div class="card-style mb-30">
+
+                @if (Model.oUsuario.IdUsuario == 0)
+                {
+                    <h6 class="input-style-25">Crear Una nuevo Usuario</h6>
+                }
+                else
+                {
+                    <h6 class="input-style-25"> Editar el Usuario</h6>
+                }
+
+
+                <form asp-action="Usuario_Detalle" asp-controller="Usuario" method="post">
+                    <input type="hidden" asp-for="oUsuario.IdUsuario" />
+
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="oUsuario.Nombre">Nombre</label>
+                        <input class="form-control form-control-sm" asp-for="oUsuario.Nombre" type="text" required />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="oUsuario.Correo">Correo</label>
+                        <input class="form-control form-control-sm" asp-for="oUsuario.Correo" type="text" required />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="oUsuario.Telefono">Telefono</label>
+                        <input class="form-control form-control-sm" asp-for="oUsuario.Telefono" type="text" required />
+                    </div>
+
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="oUsuario.IdRol">Rol</label>
+                        <select class="form-select form-select-sm" asp-for="oUsuario.IdRol" asp-items="@Model.oListaRol" required>
+                            <option selected disabled> --seleccionar--</option>
+                        </select>
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="oUsuario.UrlFoto">URL Foto</label>
+                        <input class="form-control form-control-sm" asp-for="oUsuario.UrlFoto" type="hidden" required />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="oUsuario.NombreFoto">Cargo</label>
+                        <input class="form-control form-control-sm" asp-for="oUsuario.NombreFoto" type="text" required />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="oUsuario.Clave">Contraseña</label>
+                        <input class="form-control form-control-sm" asp-for="oUsuario.Clave" type="text" required />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label" asp-for="oUsuario.EsActivo">Estado</label>
+                        <select class="form-select form-select-sm" asp-for="oUsuario.EsActivo">
+                            <option value="True">Activo</option>
+                            <option value="False">No Activo</option>
+                        </select>
+                    </div>
+                    <div class="input-style-2" hidden>
+                        <label class="form-label" asp-for="oUsuario.FechaRegistro">Fecha y Hora/Punto de Carga</label>
+                        <input class="form-control form-control-sm" asp-for="oUsuario.FechaRegistro" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
+                    </div>
+
+
+
+                    <div class="input-style-2">
+
+                        @if (Model.oUsuario.IdUsuario == 0)
+                        {
+                            <button class="btn btn-primary btn-sm w-45" type="submit">Crear</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-primary btn-sm w-45" type="submit">Actualizar</button>
+
+                        }
+                        <a class="btn btn-dark btn-sm" asp-action="Index" asp-controller="Usuario">Volver</a>
+
+                    </div>
+
+                </form>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+@section Scripts{
+
+}

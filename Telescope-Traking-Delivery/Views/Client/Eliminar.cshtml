@@ -1,0 +1,81 @@
+﻿@model Telescope_Traking_Delivery.Models.Client;
+
+@{
+    ViewData["Title"] = "Eliminar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form-elements-wrapper fa-align-center">
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            <!-- input style start -->
+            <div class="card-style mb-30">
+
+
+                <h6 class="input-style-25">Eliminar registro de Cliente</h6>
+
+
+
+                <form asp-action="Eliminar" asp-controller="Client" method="post">
+                    <input type="hidden" asp-for="IdClient" />
+
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for=" CodeClient">Codigo de Cliente</label>
+                        <input class="form-control form-control-sm" asp-for="CodeClient" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for=" ClientName">Nombre de Cliente</label>
+                        <input class="form-control form-control-sm" asp-for="ClientName" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for=" ContactAliases">Aliaz</label>
+                        <input class="form-control form-control-sm" asp-for="ContactAliases" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for=" Rfc">RFC</label>
+                        <input class="form-control form-control-sm" asp-for="Rfc" type="text" disabled />
+                    </div>
+
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for=" AddressClient">Direccion</label>
+                        <input class="form-control form-control-sm" asp-for="AddressClient" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="TypeCredit">Tipo de credito</label>
+                        <input class="form-control form-control-sm" asp-for="TypeCredit" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="TypeClient">Tipo de Cliente</label>
+                        <input class="form-control form-control-sm" asp-for="TypeClient" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="EsActivo">Estado</label>
+                        <select class="form-select form-select-sm" asp-for="EsActivo" disabled>
+                            <option selected disabled> --seleccionar--</option>
+                            <option value="True">Activo</option>
+                            <option value="False">No Activo</option>
+                        </select>
+                    </div>
+
+                    <div class="input-style-2">
+
+                        <button class="btn btn-danger btn-sm w-25" type="submit">Eliminar</button>
+                        <a class="btn btn-dark btn-sm" asp-action="Index" asp-controller="Client">Volver</a>
+
+                    </div>
+
+
+
+                </form>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

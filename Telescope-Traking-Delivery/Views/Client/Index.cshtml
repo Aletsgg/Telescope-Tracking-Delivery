@@ -1,0 +1,283 @@
+﻿@model List<Telescope_Traking_Delivery.Models.Client>
+@{
+    ViewData["Title"] = "Clientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Estilos{
+
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+    @*ESTILOS DE BOTONES*@
+    <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" rel="stylesheet" />
+
+
+    @*filter columns*@
+    <link href="https://cdn.datatables.net/fixedheader/3.2.2/css/fixedHeader.dataTables.min.css" rel="stylesheet" />
+
+    <style>
+
+        thead input {
+            width: 100%;
+            background-color: #FFFFCC !important
+        }
+
+        .btn-exportar-excel {
+            background-color: #198754 !important;
+            color: white !important;
+        }
+
+        .btn-exportar-pdf {
+            background-color: #dc3545 !important;
+            color: white !important;
+        }
+
+        .btn-exportar-print {
+            background-color: #00a7c9 !important;
+            color: white !important;
+        }
+    </style>
+}
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card-style mb-30">
+            <h6 class="mb-10">Tabla de Clientes.</h6>
+            <p class="text-sm mb-20">
+                Registro de los clientes nbio.
+            </p>
+
+
+
+            <ul class="buttons-group">
+                <li>
+                    <a class="main-btn primary-btn-outline rounded-full btn-hover" asp-action="Client_Detalle" asp-controller="Client"
+                       asp-route-idClient="0">Crear Nuevo</a>
+                </li>
+                @if (User.IsInRole("1"))
+                {
+                    <li>
+                        <a class="main-btn success-btn-outline rounded-full btn-hover" asp-action="MostrarDatos" asp-controller="Client">Cargar Excel</a>
+                    </li>
+                }
+            </ul>
+
+            <div class="row">
+                <div class="table-wrapper table-responsive">
+
+                    <table class="table striped-table" id="tb_Clientes">
+
+                        <thead>
+                            <tr class="text-center">
+                                <th>Clave de Cliente</th>
+                                <th>Nombre          </th>
+                                <th>Alias           </th>
+                                <th>RFC             </th>
+                                <th>Dirección       </th>
+                                <th>Tipo de crédito </th>
+                                <th>Tipo de Cliente </th>
+                                <th>Estado          </th>
+                                <th>Fecha de Registro</th>
+                                <th>Actualizar      </th>
+                                <th>Eliminar        </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @foreach (var item in Model)
+                            {
+                                <tr class="text-center">
+
+                                    <td> <p> @item.CodeClient       </p> </td>
+                                    <td> <p> @item.ClientName       </p> </td>
+                                    <td> <p> @item.ContactAliases   </p> </td>
+                                    <td> <p> @item.Rfc              </p> </td>
+                                    <td> <p> @item.AddressClient    </p> </td>
+                                    <td> <p> @item.TypeCredit       </p> </td>
+                                    <td> <p> @item.TypeClient       </p> </td>
+                                    <td>
+                                        <p>
+                                            <script>
+                                                var activo = "";
+
+                                                activo = "@item.EsActivo";
+
+                                                if (activo == "True") {
+                                                    document.write('<span class="status-btn active-btn">Activo</span>');
+                                                }
+                                                else {
+                                                    document.write('<span class="status-btn deactive-btn">No Activo</span>');
+                                                }
+                                            </script>
+                                        </p>
+                                    </td>
+                                    <td> <p> @item.FechaRegistro    </p> </td>
+
+                                    <td>
+                                        <div class="action">
+                                            <a class="text-primari mx-auto" asp-action="Client_Detalle" asp-controller="Client" asp-route-IdClient="@item.IdClient"><i class="lni lni-pencil"></i></a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="action">
+                                            <a class="text-danger mx-auto" asp-action="Eliminar" asp-controller="Client" asp-route-IdClient="@item.IdClient"> <i class="lni lni-trash-can"></i> </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!-- end table -->
+                </div>
+            </div>
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col -->
+</div>
+<!-- end row -->
+@section Scripts{
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+    @*SCRIPTS DE BOTONES*@
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+
+    @*excel*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+
+    @*pdf*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+    @*imprimir*@
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+
+
+
+    @*filter columns*@
+    <script src="https://cdn.datatables.net/fixedheader/3.2.2/js/dataTables.fixedHeader.min.js"></script>
+
+
+
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('#tb_Clientes thead tr').clone(true).addClass('filters').appendTo('#tb_Clientes thead');
+
+
+            $('#tb_Clientes').DataTable({
+
+                //________________ SEGUNDO ____________
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+                },
+                //________________ TERCERO ____________
+                columnDefs: [
+                    {
+                        targets: 0,
+                        visible: false
+                    }
+                ],
+                //_______________ CUARTO ______________
+                dom: 'Bfrtip',
+                buttons: [
+                    //'excel',
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Exportar Excel',
+                        filename: 'Reporte Empleados',
+                        title: '',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8]
+                        },
+                        className: 'btn-exportar-excel',
+                    },
+                    //'pdf',
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Exportar PDF',
+                        filename: 'Reporte Empleados',
+                        title: '',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8]
+                        },
+                        className: 'btn-exportar-pdf',
+                    },
+                    //'print'
+                    {
+                        extend: 'print',
+                        title: '',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8]
+                        },
+                        className: 'btn-exportar-print'
+
+                    },
+                    //extra
+                    'pageLength'
+                ],
+                //______________ QUINTO _______________
+                orderCellsTop: true,
+                fixedHeader: true,
+                initComplete: function () {
+                    var api = this.api();
+
+                    // For each column
+                    api.columns().eq(0).each(function (colIdx) {
+
+                        // Set the header cell to contain the input element
+                        var cell = $('.filters th').eq($(api.column(colIdx).header()).index());
+
+                        var title = $(cell).text();
+
+                        //$(cell).html('<input type="text" placeholder="' + title + '" />');
+                        $(cell).html('<input type="text" placeholder="Buscar..." />');
+
+                        // On every keypress in this input
+                        $('input', $('.filters th').eq($(api.column(colIdx).header()).index())).off('keyup change').on('keyup change', function (e) {
+
+                            e.stopPropagation();
+
+                            // Get the search value
+                            $(this).attr('title', $(this).val());
+                            var regexr = '({search})'; //$(this).parents('th').find('select').val();
+
+                            var cursorPosition = this.selectionStart;
+                            // Search the column for that value
+                            api
+                                .column(colIdx)
+                                .search(
+                                    this.value != ''
+                                        ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                        : '',
+                                    this.value != '',
+                                    this.value == ''
+                                )
+                                .draw();
+
+                            $(this)
+                                .focus()[0]
+                                .setSelectionRange(cursorPosition, cursorPosition);
+                        });
+                    });
+                },
+
+                //extra
+                //searching: false
+
+
+
+            });
+
+
+
+        });
+    </script>
+}                                 

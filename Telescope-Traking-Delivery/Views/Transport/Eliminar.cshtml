@@ -1,0 +1,79 @@
+﻿@model Telescope_Traking_Delivery.Models.Transport
+
+@{
+    ViewData["Title"] = "Eliminar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="form-elements-wrapper fa-align-center">
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            <!-- input style start -->
+            <div class="card-style mb-30">
+
+
+                <h6 class="input-style-25">Eliminar registro de Transporte</h6>
+
+
+
+                <form asp-action="Eliminar" asp-controller="Transport" method="post">
+                    <input type="hidden" asp-for="IdTransport" />
+
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for=" TransportName">Nombre de transporte</label>
+                        <input class="form-control form-control-sm" asp-for=" TransportName" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for=" UnitType">Tipo de Unidad</label>
+                        <input class="form-control form-control-sm" asp-for=" UnitType" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for=" Plate">Placa</label>
+                        <input class="form-control form-control-sm" asp-for=" Plate" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for=" Capacity">Capacidad</label>
+                        <input class="form-control form-control-sm" asp-for=" Capacity" type="text" disabled />
+                    </div>
+
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for=" Details">Detalles</label>
+                        <input class="form-control form-control-sm" asp-for="Details" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="Refrigerated">Refrigerado</label>
+                        <input class="form-control form-control-sm" asp-for="Refrigerated" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="EsActivo">Estado</label>
+                        <select class="form-select form-select-sm" asp-for="EsActivo" disabled>
+                            <option selected disabled> --seleccionar--</option>
+                            <option value="True">Activo</option>
+                            <option value="False">No Activo</option>
+                        </select>
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="UrlImagen">Url Imagen</label>
+                        <input class="form-control form-control-sm" asp-for="UrlImagen" type="text" disabled />
+                    </div>
+
+                    <div class="input-style-2">
+
+                        <button class="btn btn-danger btn-sm w-25" type="submit">Eliminar</button>
+                        <a class="btn btn-dark btn-sm" asp-action="Index" asp-controller="Transport">Volver</a>
+
+                    </div>
+
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

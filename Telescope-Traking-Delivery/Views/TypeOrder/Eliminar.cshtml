@@ -1,0 +1,82 @@
+﻿@model Telescope_Traking_Delivery.Models.TypeOrder
+
+@{
+    ViewData["Title"] = "Eliminar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="form-elements-wrapper fa-align-center">
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            <!-- input style start -->
+            <div class="card-style mb-30">
+
+
+                <h6 class="input-style-25">Eliminar registro de Tipo de Pedido</h6>
+
+
+
+
+                <form asp-action="Eliminar" asp-controller="TypeOrder" method="post">
+                    <input type="hidden" asp-for="IdTypeOrders" />
+
+                    <div class="mb-2">
+                        <label class="form-label" asp-for="Clasification">Clasificacion</label>
+                        <input class="form-control form-control-sm" asp-for=" Clasification" type="text" disabled />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label" asp-for=" DescriptionOrder">Descripcion</label>
+                        <input class="form-control form-control-sm" asp-for=" DescriptionOrder" type="text" disabled />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label" asp-for=" LocalForaneo">Local / Foraneo</label>
+                        <input class="form-control form-control-sm" asp-for=" LocalForaneo" type="text" disabled />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label" asp-for=" NormalOrFast">Normal / Entregar Rapida</label>
+                        <input class="form-control form-control-sm" asp-for=" NormalOrFast" type="text" disabled />
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label" asp-for=" Promotion">Promocional</label>
+                        <input class="form-control form-control-sm" asp-for="Promotion" type="text" disabled />
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label" asp-for="EsActivo">Estado</label>
+                        <select class="form-select form-select-sm" asp-for="EsActivo" disabled>
+                            <option selected disabled> --seleccionar--</option>
+                            <option value="True">Activo</option>
+                            <option value="False">No Activo</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-2">
+
+                        <button class="btn btn-danger btn-sm w-25" type="submit">Eliminar</button>
+                        <a class="btn btn-dark btn-sm" asp-action="Index" asp-controller="TypeOrder">Volver</a>
+
+                    </div>
+
+
+
+                </form>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+@section Scripts{
+
+
+
+}

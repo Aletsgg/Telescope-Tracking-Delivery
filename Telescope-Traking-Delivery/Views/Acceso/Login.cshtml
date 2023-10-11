@@ -1,0 +1,172 @@
+﻿@{
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="~/assets/images/favicon.svg" type="image/x-icon" />
+
+    <title>Login</title>
+
+
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/css/lineicons.css" />
+    <link rel="stylesheet" href="~/assets/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="~/assets/css/fullcalendar.css" />
+    <link rel="stylesheet" href="~/assets/css/main.css" />
+</head>
+
+<body>
+
+
+
+
+    <!-- ========== signin-section start ========== -->
+    <section class="signin-section">
+        <div class="container-fluid">
+
+            <!-- ========== title-wrapper end ========== -->
+
+            <div class="row g-0 auth-row">
+                <div class="col-lg-6">
+                    <div class="auth-cover-wrapper bg-primary-100">
+                        <div class="auth-cover">
+                            <div class="title text-center">
+                                <h1 class="text-primary mb-10">Bienvenido de Nuevo.</h1>
+                                <p class="text-medium">
+                                    Telescope Tracking Delivery
+                                </p>
+                            </div>
+                            <div class="cover-image">
+                                <img src="~/img/Logo.png" alt="" />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+                <div class="col-lg-6">
+                    <div class="signin-wrapper">
+                        <div class="form-wrapper">
+                            <h6 class="mb-15">Iniciar sesion.</h6>
+                            <p class="text-sm mb-25">
+                                Empieza a crear la mejor experiencia de usuario...
+                            </p>
+
+
+
+
+                            <form asp-controller="Acceso" asp-action="Login" method="post">
+
+
+
+                                <div class="col-12">
+                                    <div class="input-style-1">
+                                        <label>Correo</label>
+                                        <input type="email" class="login-username" autofocus required
+                                               placeholder="email" name="Correo" />
+                                    </div>
+                                </div>
+
+
+                                <!-- end col -->
+                                <div class="col-12">
+                                    <div class="input-style-1">
+                                        <label>Contraseña</label>
+                                        <input type="password" class="login-password" required placeholder="Password"
+                                               name="Clave" />
+                                    </div>
+                                </div>
+                                <!-- end col -->
+                                <div class="col-xxl-6 col-lg-12 col-md-6">
+                                    <div class="form-check checkbox-style mb-30">
+                                        <input class="form-check-input" type="checkbox" name="CheckMe"
+                                               id="checkbox-remember" />
+                                        <label class="form-check-label" for="checkbox-remember">
+                                            Recordarme mas tarde.
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- end col -->
+                                <div class="col-12">
+                                    <div class="button-group d-flex justify-content-center flex-wrap">
+
+                                        <button type="submit" class="main-btn primary-btn btn-hover w-100 text-center">
+                                            Iniciar Sesión
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- end row -->
+                            </form>
+
+
+
+
+
+                            <div class="singin-option pt-40">
+                                <p class="text-sm text-medium text-center text-gray">
+                                    Easy Sign In With
+                                </p>
+
+                                <p class="text-sm text-medium text-dark text-center">
+                                    ¿No tienes una cuenta?
+                                    <a href="@Url.Action("Register","Register")"> Crea una.</a>
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+    </section>
+    <!-- ========== signin-section end ========== -->
+    <!-- ========== footer start =========== -->
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 order-last order-md-first">
+                    <div class="copyright text-center text-md-start">
+                        <p class="text-sm">
+
+                            <a href="https://envialomexico.com/" rel="nofollow" target="_blank">
+                                ENVÍALO MÉXICO SA DE CV
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                <!-- end col-->
+                <div class="col-md-6">
+                    <div class="terms d-flex justify-content-center justify-content-md-end">
+                        <a href="#0" class="text-sm">Term & Conditions</a>
+                        <a href="#0" class="text-sm ml-15">Privacy & Policy</a>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </footer>
+    <!-- ========== footer end =========== -->
+    <!-- ========= All Javascript files linkup ======== -->
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/Chart.min.js"></script>
+    <script src="~/assets/js/dynamic-pie-chart.js"></script>
+    <script src="~/assets/js/moment.min.js"></script>
+    <script src="~/assets/js/fullcalendar.js"></script>
+    <script src="~/assets/js/jvectormap.min.js"></script>
+    <script src="~/assets/js/world-merc.js"></script>
+    <script src="~/assets/js/polyfill.js"></script>
+</body>
+
+</html>

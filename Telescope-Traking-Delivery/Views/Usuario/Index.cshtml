@@ -1,0 +1,107 @@
+﻿@model List<Telescope_Traking_Delivery.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card-style mb-30">
+            <h6 class="mb-10">Tabla de Usuarios.</h6>
+            <p class="text-sm mb-20">
+                Registro de los Usuarios de TRACKER nbio.
+            </p>
+
+            <ul class="buttons-group">
+                <li>
+                    <a class="main-btn primary-btn-outline rounded-full btn-hover" asp-action="Usuario_Detalle" asp-controller="Usuario"
+                       asp-route-IdUsuario="0">Crear Nuevo</a>
+                </li>
+                @if (User.IsInRole("1"))
+                {
+                    <li>
+                        <a class="main-btn success-btn-outline rounded-full btn-hover" asp-action="MostrarDatos" asp-controller="Usuario">Cargar Excel</a>
+                    </li>
+                }
+            </ul>
+
+            <div class="row">
+                <div class="table-wrapper table-responsive">
+                    <table class="table striped-table table-hover">
+
+                        <thead>
+                            <tr class="text-center">
+                                <th>ID  </th>
+                                <th>Nombre</th>
+                                <th>Telefono</th>
+                                <th>Correo</th>
+                                <th>Contraseña</th>
+                                <th>Rol</th>
+                                <th>Es activo</th>
+                                <th>Foto</th>
+                                <th>Fecha de Registro</th>
+                                <th>Actualizar</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr class="text-center">
+
+                                    <td><p>@item.IdUsuario      </p></td>
+                                    <td><p>@item.Nombre         </p></td>
+                                    <td><p>@item.Telefono       </p></td>
+                                    <td><p>@item.Correo         </p></td>
+                                    <td><p>@item.Clave          </p></td>
+                                    <td><p>@item.IdRolNavigation.Descripcion</p></td>
+                                    <td>
+                                        <p>
+                                            <script>
+                                                var activo = "";
+
+                                                activo = "@item.EsActivo";
+
+                                                if (activo == "True") {
+                                                    document.write('<span class="status-btn active-btn">Activo</span>');
+                                                }
+                                                else {
+                                                    document.write('<span class="status-btn deactive-btn">No Activo</span>');
+                                                }
+                                            </script>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <div class="profile-image">
+                                            <img id="imgProducto" style="max-width:100px;" src="@item.UrlFoto" class="rounded mx-auto d-block" alt="...">
+                                        </div>
+                                    </td>
+                                    <td><p>@item.FechaRegistro </p></td>
+                                    <td>
+                                        <div class="action">
+                                            <a class="text-primari mx-auto" asp-action="Usuario_Detalle" asp-controller="Usuario" asp-route-IdUsuario="@item.IdUsuario"><i class="lni lni-pencil"></i></a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="action">
+                                            <a class="text-danger mx-auto" asp-action="Eliminar" asp-controller="Usuario" asp-route-IdUsuario="@item.IdUsuario"> <i class="lni lni-trash-can"></i></a>
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!-- end table -->
+                </div>
+            </div>
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col -->
+</div>
+<!-- end row -->
+@section Scripts{
+
+}

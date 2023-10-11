@@ -1,0 +1,90 @@
+﻿@model Telescope_Traking_Delivery.Models.Usuario;
+
+@{
+    ViewData["Title"] = "Eliminar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Estilos{
+
+
+}
+
+<div class="form-elements-wrapper fa-align-center">
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            <!-- input style start -->
+            <div class="card-style mb-30">
+
+
+                <h6 class="input-style-25">Eliminar registro de Cliente</h6>
+
+                <form asp-action="Eliminar" asp-controller="Usuario" method="post">
+                    <input type="hidden" asp-for="IdUsuario" />
+
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="Nombre">Nombre</label>
+                        <input class="form-control form-control-sm" asp-for="Nombre" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="Correo">Correo</label>
+                        <input class="form-control form-control-sm" asp-for="Correo" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="Telefono">Telefono</label>
+                        <input class="form-control form-control-sm" asp-for="Telefono" type="text" disabled />
+                    </div>
+
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="IdRolNavigation.IdRol">Rol</label>
+                        <input class="form-control form-control-sm" asp-for="IdRolNavigation.IdRol" disabled>
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="UrlFoto">URL Foto</label>
+                        <input class="form-control form-control-sm" asp-for="UrlFoto" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="NombreFoto">Cargo</label>
+                        <input class="form-control form-control-sm" asp-for="NombreFoto" type="text" disabled />
+                    </div>
+                    <div class="input-style-2">
+                        <label class="form-label" asp-for="Clave">Contraseña</label>
+                        <input class="form-control form-control-sm" asp-for="Clave" type="text" disabled />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label" asp-for="EsActivo">Estado</label>
+                        <input class="form-control form-control-sm" asp-for="EsActivo" disabled>
+                    </div>
+
+
+
+                    <div class="mb-2">
+
+                        <button class="btn btn-danger btn-sm w-25" type="submit">Eliminar</button>
+                        <a class="btn btn-dark btn-sm" asp-action="Index" asp-controller="Usuario">Volver</a>
+
+                    </div>
+
+                </form>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+@section Scripts{
+
+
+
+}

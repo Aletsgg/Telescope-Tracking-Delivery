@@ -1,0 +1,157 @@
+﻿@model Telescope_Traking_Delivery.Models.ViewModels.UsuarioVM;
+
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- ========== section start ========== -->
+<section class="section">
+    <div class="container-fluid">
+        <!-- ========== title-wrapper start ========== -->
+        <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="title">
+                        <h2>Profile</h2>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- ========== title-wrapper end ========== -->
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card-style settings-card-1 mb-30">
+                    <div class="title mb-30 d-flex justify-content-between align-items-center">
+                        <h6>My Profile</h6>
+                        <button class="border-0 bg-transparent">
+                            <i class="lni lni-pencil-alt"></i>
+                        </button>
+                    </div>
+                    <div class="profile-info">
+                        <div class="d-flex align-items-center mb-30">
+                            <div class="profile-image">
+                                <img src="@ViewData["UrlFoto"]" alt="" />
+                                <div class="update-image">
+                                    <input type="file" />
+                                    <label for=""><i class="lni lni-cloud-upload"></i></label>
+                                </div>
+                            </div>
+                            <div class="profile-meta">
+                                <h5 class="text-bold text-dark mb-10">@ViewData["nombreUsuario"]</h5>
+                            </div>
+                        </div>
+                        <div class="input-style-1">
+                            <label>Email</label>
+                            <input class="form-control form-control-sm" asp-for="oUsuario.Correo" type="text" disabled />
+                        </div>
+                        <div class="input-style-1">
+                            <label>Password</label>
+                            <input class="form-control form-control-sm" asp-for="oUsuario.Clave" type="text" disabled />
+                        </div>
+                        <div class="input-style-1">
+                            <label>Phone</label>
+                            <input class="form-control form-control-sm" asp-for="oUsuario.Telefono" type="text" disabled />
+                        </div>
+                        <div class="input-style-1">
+                            <label>Cargo</label>
+                            <input class="form-control form-control-sm" asp-for="oUsuario.NombreFoto" type="text" disabled />
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- end card -->
+            </div>
+            <!-- end col -->
+
+
+
+
+
+            <div class="col-lg-6">
+                <div class="card-style settings-card-2 mb-30">
+                    <div class="title mb-30">
+                        <h6>Actualiazar información</h6>
+                    </div>
+
+                    <form asp-action="Profile" asp-controller="Usuario" method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="oUsuario.IdUsuario" />
+                        <div class="row">
+
+                            <div class="input-style-2">
+                                <label class="form-label" asp-for="oUsuario.Nombre">Nombre</label>
+                                <input class="form-control form-control-sm" asp-for="oUsuario.Nombre" type="text" required />
+                            </div>
+                            <div class="input-style-2">
+                                <label class="form-label" asp-for="oUsuario.Correo">Correo</label>
+                                <input class="form-control form-control-sm" asp-for="oUsuario.Correo" type="text" required />
+                            </div>
+                            <div class="input-style-2">
+                                <label class="form-label" asp-for="oUsuario.Telefono">Telefono</label>
+                                <input class="form-control form-control-sm" asp-for="oUsuario.Telefono" type="text" required />
+                            </div>
+
+                            <div class="input-style-2" hidden disabled>
+                                <label class="form-label" asp-for="oUsuario.IdRol" hidden>Rol</label>
+                                <select class="form-select form-select-sm" asp-for="oUsuario.IdRol" asp-items="@Model.oListaRol" required hidden>
+                                </select>
+                            </div>
+                            <div class="input-style-2">
+                                <label class="form-label" asp-for="oUsuario.UrlFoto">URL Foto</label>
+                                <input class="form-control form-control-sm" asp-for="oUsuario.UrlFoto" type="file" name="Imagen" />
+                            </div>
+                            <div class="input-style-2" hidden>
+                                <label class="form-label" asp-for="oUsuario.NombreFoto" hidden>Cargo/Puesto</label>
+                                <input class="form-control form-control-sm" asp-for="oUsuario.NombreFoto" type="text" required hidden />
+                            </div>
+                            <div class="input-style-2">
+                                <label class="form-label" asp-for="oUsuario.Clave">Contraseña</label>
+                                <input class="form-control form-control-sm" asp-for="oUsuario.Clave" type="text" required />
+                            </div>
+                            <div class="mb-2" hidden disabled>
+                                <label class="form-label" asp-for="oUsuario.EsActivo" hidden>Estado</label>
+                                <select class="form-select form-select-sm" asp-for="oUsuario.EsActivo" hidden>
+                                    <option selected disabled> --seleccionar--</option>
+                                    <option value="true">Activo</option>
+                                    <option value="false">No Activo</option>
+                                </select>
+                            </div>
+                            <div class="input-style-2" hidden>
+                                <label class="form-label" asp-for="oUsuario.FechaRegistro">Fecha y Hora/Punto de Carga</label>
+                                <input class="form-control form-control-sm" asp-for="oUsuario.FechaRegistro" type="date" id="FechaActual" required />
+                            </div>
+
+
+
+                            <div class="input-style-2">
+                                <button class="main-btn primary-btn btn-hover" type="submit">
+                                    Update Profile
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+                <!-- end card -->
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</section>
+<!-- ========== section end ========== -->
+@section Scripts{
+
+
+    <script>
+        var fecha = new Date();
+        document.getElementById("FechaActual").value = fecha.toJSON().slice(0, 10);
+    </script>
+
+}
