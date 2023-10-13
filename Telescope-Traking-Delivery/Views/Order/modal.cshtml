@@ -1,0 +1,163 @@
+﻿@model Telescope_Traking_Delivery.Models.Order;
+@{
+    ViewData["Title"] = "modal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Multi Columns Form</h5>
+
+
+        <!-- Multi Columns Form -->
+        <form class="row g-3" asp-action="modal" asp-controller="Order" method="post">
+            <input type="hidden" asp-for="IdOrders" />
+
+            <div class="col-md-6">
+                <label for="inputName5" class="form-label" asp-for="SiteLoading">Sitio de Carga</label>
+                <input type="text" class="form-control" asp-for="SiteLoading" type="text" disabled />
+            </div>
+            <div class="col-md-6">
+                <label for="inputEmail5" class="form-label" asp-for="OrdersDelivery">ENTREGA / VALE </label>
+                <input type="text" class="form-control" asp-for="OrdersDelivery" type="text" disabled />
+            </div>
+            <div class="col-md-6">
+                <label for="inputPassword5" class="form-label" asp-for="IdTypeOrdersNavigation.Promotion">VENTA / PROMO </label>
+                <input type="text" class="form-control" asp-for="IdTypeOrdersNavigation.Promotion" type="text" disabled />
+            </div>
+            <div class="col-6">
+                <label for="inputAddress5" class="form-label" asp-for="IdTransportNavigation.UnitType">UNIDAD </label>
+                <input type="text" class="form-control" id="inputAddres5s" asp-for="IdTransportNavigation.UnitType" type="text" disabled />
+            </div>
+            <div class="col-md-4">
+                <label for="inputEmail5" class="form-label" asp-for="IdTransportNavigation.Plate">PLACAS</label>
+                <input type="text" class="form-control" asp-for="IdTransportNavigation.Plate" type="text" disabled />
+            </div>
+            <div class="col-md-4">
+                <label for="inputPassword5" class="form-label" asp-for="IdTransportNavigation.TransportName">TRANSPORTE</label>
+                <input type="text" class="form-control" asp-for="IdTransportNavigation.TransportName" type="text" disabled />
+            </div>
+            <div class="col-md-4">
+                <label for="inputPassword5" class="form-label" asp-for="IdTransportistNavigation.NameTransportist">OPERADOR</label>
+                <input type="text" class="form-control" asp-for="IdTransportistNavigation.NameTransportist" type="text" disabled />
+            </div>
+            <div class="col-md-6">
+                <label for="inputAddress2" class="form-label" asp-for="IdClientNavigation.ClientName">CLIENTE</label>
+                <input type="text" class="form-control" id="inputAddress2" asp-for="IdClientNavigation.ClientName" type="text" disabled />
+            </div>
+            <div class="col-md-6">
+                <label for="inputName5" class="form-label" asp-for="Destination">DESTINO</label>
+                <input type="text" class="form-control" asp-for="Destination" type="text" disabled />
+            </div>
+            <div class="col-md-6">
+                <label for="inputEmail5" class="form-label" asp-for="IdTypeOrdersNavigation.LocalForaneo">ZONA</label>
+                <input type="text" class="form-control" asp-for="IdTypeOrdersNavigation.LocalForaneo" type="text" disabled />
+            </div>
+            <div class="col-md-6">
+                <label for="inputPassword5" class="form-label" asp-for="IdTypeOrdersNavigation.Clasification">TIPO DE PEDIDO</label>
+                <input type="text" class="form-control" asp-for="IdTypeOrdersNavigation.Clasification" type="text" disabled />
+            </div>
+            <div class="col-md-6">
+                <label for="inputAddress5" class="form-label" asp-for="Boxes">CAJAS </label>
+                <input type="text" class="form-control" asp-for="Boxes" type="text" disabled />
+            </div>
+            <div class="col-md-6">
+                <label for="inputEmail5" class="form-label" asp-for="Pieces">PIEZAS</label>
+                <input type="text" class="form-control" asp-for="Pieces" type="text" disabled />
+            </div>
+            <div class="col-md-3">
+                <label for="inputPassword5" class="form-label" asp-for="DtAppointedForShipment">FECHA Y HORA DE CARGA PROGRAMADA</label>
+                <input type="text" class="form-control" asp-for="DtAppointedForShipment" type="text" disabled />
+            </div>
+            <div class="col-md-3">
+                <label for="inputPassword5" class="form-label" asp-for="DtOfBoarding">FECHA Y HORA DE CARGA REAL</label>
+                <input type="text" class="form-control" asp-for="DtOfBoarding" type="text" disabled />
+            </div>
+            <div class="col-md-3">
+                <label for="inputAddress2" class="form-label" asp-for="DtOfFarrivalOfUnit">FECHA Y HORA DE LLEAGDA DE LA UNIDAD</label>
+                <input type="text" class="form-control" asp-for="DtOfFarrivalOfUnit" type="text" disabled />
+            </div>
+            <div class="col-md-2">
+                <label for="inputName5" class="form-label" asp-for="OtOfBoarding">OT LLEGADA A CARGA</label>
+                <input type="text" class="form-control" asp-for="OtOfBoarding" type="text" disabled />
+            </div>
+            <div class="col-md-4">
+                <label for="inputEmail5" class="form-label" asp-for="DtOfChargingStart">FEHA Y HORA DE INICIO DE CARGA</label>
+                <input type="text" class="form-control" asp-for="DtOfChargingStart" type="text" disabled />
+            </div>
+            <div class="col-md-4">
+                <label for="inputPassword5" class="form-label" asp-for="DtLoadingEnd">FEHA Y HORA DE FIN DE CARGA</label>
+                <input type="text" class="form-control" asp-for="DtLoadingEnd" type="text" disabled />
+            </div>
+            <div class="col-md-4">
+                <label for="inputAddress5" class="form-label" asp-for="OtOfChargingStart">OT DE CARGA</label>
+                <input type="text" class="form-control" asp-for="OtOfChargingStart" type="text" disabled />
+            </div>
+            <div class="col-md-3">
+                <label for="inputEmail5" class="form-label" asp-for="DtOfDepartureFromSite">FECHA Y HORA DE LIMITE DE SALIDA DE SITIO</label>
+                <input type="text" class="form-control" asp-for="DtOfDepartureFromSite" type="text" disabled />
+            </div>
+            <div class="col-md-3">
+                <label for="inputPassword5" class="form-label" asp-for="DtDeliveryAppointment">FECHA Y HORA DE CITA DE ENTREGA</label>
+                <input type="text" class="form-control" asp-for="DtDeliveryAppointment" type="text" disabled />
+            </div>
+            <div class="col-md-3">
+                <label for="inputPassword5" class="form-label" asp-for="DtArrivalToUnload">FECHA Y HORA DE ENTREGA REAL</label>
+                <input type="text" class="form-control" asp-for="DtArrivalToUnload" type="text" disabled />
+            </div>
+            <div class="col-md-2">
+                <label for="inputAddress2" class="form-label" asp-for="OnTime">OT DE ENTREGA</label>
+                <input type="text" class="form-control" class="form-control" asp-for="OnTime" type="text" disabled />
+            </div>
+            <div class="col-md-12">
+                <label for="inputName5" class="form-label" asp-for="DeliveryStatus">ESTATUS</label>
+                <input type="text" class="form-control" asp-for="DeliveryStatus" type="text" disabled />
+            </div>
+            <div class="col-md-6">
+                <label for="inputEmail5" class="form-label" asp-for="ShippingObservations">OBSERVACIONES EN EL EMBARQUE</label>
+                <input type="text" class="form-control" asp-for="ShippingObservations" style="height: 150px;" disabled />
+            </div>
+            <div class="col-md-6">
+                <label for="inputPassword5" class="form-label" asp-for="Obsevations">OBSERVACIONES EN LA ENTREGA</label>
+                <input type="text" class="form-control" asp-for="Obsevations" style="height: 150px;" disabled />
+            </div>
+            <div class="col-12">
+                <label for="inputAddress5" class="form-label" asp-for="IncidentOfArrivalCargoTr">INCI. ARRIBO A CARGA (TRANSPORTE)</label>
+                <input type="text" class="form-control" asp-for="IncidentOfArrivalCargoTr" type="text" disabled />
+            </div>
+            <div class="col-12">
+                <label for="inputEmail5" class="form-label" asp-for="IncidentOfArrivalClientTr">INCI. ARRIBO A CLIENTE (TRANSPORTE)</label>
+                <input type="text" class="form-control" asp-for="IncidentOfArrivalClientTr" type="text" disabled />
+            </div>
+            <div class="col-12">
+                <label for="inputPassword5" class="form-label" asp-for="IncidentInShipmentWh">INC. EN EMBARQUE (ALMACEN)</label>
+                <input type="text" class="form-control" asp-for="IncidentInShipmentWh" type="text" disabled />
+            </div>
+            <div class="col-12">
+                <label for="inputPassword5" class="form-label" asp-for="RoadTimeIndicators">INDICADORES DE RUTAS EXTRA</label>
+                <input type="text" class="form-control" asp-for="RoadTimeIndicators" type="text" disabled />
+            </div>
+            <div class="col-12">
+                <label for="inputAddress2" class="form-label" asp-for="AccidentInRoute">SINIESTROS EN RUTA</label>
+                <input type="text" class="form-control" asp-for="AccidentInRoute" type="text" disabled />
+            </div>
+            <div class="col-md-12">
+                <label for="inputName5" class="form-label" asp-for="RoadTimeIndicators">INDICADORES TIEMPO EN CARRETERA</label>
+                <input type="text" class="form-control" asp-for="RoadTimeIndicators" type="text" disabled />
+            </div>
+
+            <div class="col-md-2">
+                <div class="action">
+                    <a class="text-primari mx-auto" asp-action="Order_Detalle" asp-controller="Order" asp-route-IdOrders="@Model.IdOrders"> <i class="lni lni-pencil"></i></a>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="action">
+                    <a class="text-danger mx-auto" asp-action="Eliminar" asp-controller="Order" asp-route-IdOrders="@Model.IdOrders"> <i class="lni lni-trash-can"></i></a>
+                </div>
+            </div>
+        </form><!-- End Multi Columns Form -->
+    </div>
+
+</div>

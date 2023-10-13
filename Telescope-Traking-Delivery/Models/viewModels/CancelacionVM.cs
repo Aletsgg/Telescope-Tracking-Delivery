@@ -4,15 +4,15 @@ namespace Telescope_Traking_Delivery.Models.ViewModels
 {
     public class CancelacionVM 
     {
-        public Cancelacion oCancelacion { get; set; }
+        public Cancelacion? oCancelacion { get; set; }
 
 
-        public List<SelectListItem> oListaClient { get; set; }
+        public List<SelectListItem>? oListaClient { get; set; }
 
-        public List<SelectListItem> oListaOrder { get; set; }
+        public List<SelectListItem>? oListaOrder { get; set; }
 
 
-        public string IdCancelation { get; set; }
+        public string? IdCancelation { get; set; }
         public string? IdClient { get; set; }
         public string? IdOrders { get; set; }
         public string? Entrega { get; set; }

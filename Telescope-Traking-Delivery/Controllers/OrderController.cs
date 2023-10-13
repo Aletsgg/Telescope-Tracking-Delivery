@@ -50,6 +50,84 @@ namespace Telescope_Traking_Delivery.Controllers
         }
 
         //----------------------( INDEX )----------------------
+
+        [Authorize(Roles = "1,2,3")]
+        public async Task<IActionResult> Historial()
+        {
+            // Get user information from Claims
+            GetUserInfo(out string nombreUsuario, out string EmailUser, out string UrlFoto, out string ROluser, out string IdUsuario);
+
+            ViewData["nombreUsuario"] = nombreUsuario;
+            ViewData["EmailUser"] = EmailUser;
+            ViewData["UrlFoto"] = UrlFoto;
+            ViewData["ROluser"] = ROluser;
+            ViewData["IdUsuario"] = IdUsuario;
+
+            int pageSize = 50;
+            var orders = _DBcontext.Orders.Include(c => c.IdClientNavigation).Include(t => t.IdTransportNavigation).Include(ts => ts.IdTransportistNavigation).Include(ty => ty.IdTypeOrdersNavigation).Include(u => u.IdUsuarioNavigation);
+            int pageCount = (int)Math.Ceiling((double)orders.Count() / pageSize);
+
+            List<Order> lista = new List<Order>();
+
+
+            for (int i = 0; i < pageCount; i++)
+            {
+                var page = await orders.Skip(i * pageSize).Take(pageSize).ToListAsync();
+                page.ForEach(p =>
+                {
+                    p.SiteLoading = p.SiteLoading ?? "";
+                    p.OrdersDelivery = p.OrdersDelivery ?? "";
+                    p.OtOfBoarding = p.OtOfBoarding ?? "";
+                    p.OtOfChargingStart = p.OtOfChargingStart ?? "";
+                    p.Destination = p.Destination ?? "";
+                    p.OnTime = p.OnTime ?? "";
+                    p.DeliveryStatus = p.DeliveryStatus ?? "";
+                    p.Obsevations = p.Obsevations ?? "";
+                    p.ShippingObservations = p.ShippingObservations ?? "";
+                    p.IncidentOfArrivalCargoTr = p.IncidentOfArrivalCargoTr ?? "";
+                    p.IncidentOfArrivalClientTr = p.IncidentOfArrivalClientTr ?? "";
+                    p.IncidentInShipmentWh = p.IncidentInShipmentWh ?? "";
+                    p.ExtraRouteIndicator = p.ExtraRouteIndicator ?? "";
+                    p.AccidentInRoute = p.AccidentInRoute ?? "";
+                    p.RoadTimeIndicators = p.RoadTimeIndicators ?? "";
+                });
+                lista.AddRange(page);
+                // Aquí puedes hacer algo con la página actual de elementos
+                // Por ejemplo, podrías agregarlos a la vista
+                ViewData["Page" + i] = page;
+            }
+
+            return View(lista);
+
+        }
+
+        public IActionResult modal(int IdOrders)
+        {
+            // Get user information from Claims
+            GetUserInfo(out string nombreUsuario, out string EmailUser, out string UrlFoto, out string ROluser, out string IdUsuario);
+
+            ViewData["nombreUsuario"] = nombreUsuario;
+            ViewData["EmailUser"] = EmailUser;
+            ViewData["UrlFoto"] = UrlFoto;
+            ViewData["ROluser"] = ROluser;
+            ViewData["IdUsuario"] = IdUsuario;
+            //---------------------------------------------------------------------
+
+
+
+
+            Order oOrder = _DBcontext.Orders.Include
+                (c => c.IdClientNavigation).Include
+                (T => T.IdTransportNavigation).Include
+                (Ts => Ts.IdTransportistNavigation).Include
+                (Ty => Ty.IdTypeOrdersNavigation).Where(e => e.IdOrders == IdOrders).FirstOrDefault();
+
+            return View(oOrder);
+
+
+        }
+
+
         [Authorize(Roles = "1,2,3")]
         public async Task<IActionResult> Index()
         {
@@ -77,11 +155,18 @@ namespace Telescope_Traking_Delivery.Controllers
                     p.SiteLoading = p.SiteLoading ?? "";
                     p.OrdersDelivery = p.OrdersDelivery ?? "";
                     p.OtOfBoarding = p.OtOfBoarding ?? "";
-                    p.VehicleControl = p.VehicleControl ?? "";
+                    p.OtOfChargingStart = p.OtOfChargingStart ?? "";
                     p.Destination = p.Destination ?? "";
                     p.OnTime = p.OnTime ?? "";
                     p.DeliveryStatus = p.DeliveryStatus ?? "";
                     p.Obsevations = p.Obsevations ?? "";
+                    p.ShippingObservations = p.ShippingObservations ?? "";
+                    p.IncidentOfArrivalCargoTr = p.IncidentOfArrivalCargoTr ?? "";
+                    p.IncidentOfArrivalClientTr = p.IncidentOfArrivalClientTr ?? "";
+                    p.IncidentInShipmentWh = p.IncidentInShipmentWh ?? "";
+                    p.ExtraRouteIndicator = p.ExtraRouteIndicator ?? "";
+                    p.AccidentInRoute = p.AccidentInRoute ?? "";
+                    p.RoadTimeIndicators = p.RoadTimeIndicators ?? "";
                 });
                 lista.AddRange(page);
                 // Aquí puedes hacer algo con la página actual de elementos
@@ -124,6 +209,8 @@ namespace Telescope_Traking_Delivery.Controllers
                     Text = Client.ClientName,
                     Value = Client.IdClient.ToString()
 
+                
+
                 }).ToList(),
 
                 oListaTransport = _DBcontext.Transports.Select(Transport => new SelectListItem()
@@ -143,7 +230,7 @@ namespace Telescope_Traking_Delivery.Controllers
 
                 oListaTypeOrder = _DBcontext.TypeOrders.Select(TypeOrders => new SelectListItem()
                 {
-                    Text = TypeOrders.Clasification,
+                    Text = TypeOrders.DescriptionOrder,
                     Value = TypeOrders.IdTypeOrders.ToString()
 
                 }).ToList(),
@@ -205,8 +292,6 @@ namespace Telescope_Traking_Delivery.Controllers
             ViewData["ROluser"] = ROluser;
             ViewData["IdUsuario"] = IdUsuario;
             //---------------------------------------------------------------------
-
-
 
 
             Order oOrder = _DBcontext.Orders.Include

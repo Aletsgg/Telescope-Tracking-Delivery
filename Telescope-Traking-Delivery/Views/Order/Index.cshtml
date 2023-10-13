@@ -1,4 +1,5 @@
 ﻿@model List<Telescope_Traking_Delivery.Models.Order>
+
 @{
     ViewData["Title"] = "Pedidos";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -76,33 +77,41 @@
                             <tr class="text-center">
                                 <th><h5>ID</h5></th>
                                 <th><h5>SITE(Carga)</h5></th>
-                                <th><h5>PEDIDO/DELIVERY</h5></th>
-                                <th><h5>FECHA Y HORA CITADO A EMBARQUE</h5></th>
-                                <th><h5>FECHA Y HORA DE EMBARQUE</h5></th>
-                                <th><h5>OT DE EMBARQUE</h5></th>
-                                <th><h5>OPERADOR</h5></th>
-                                <th><h5>TRANSPORTE</h5></th>
-                                <th><h5>TIPO DE UNIDAD</h5></th>
+                                <th><h5>ENTREGA / VALE</h5></th>
+                                <th><h5>VENTA / PROMO</h5></th>
+                                <th><h5>UNIDAD</h5></th>
                                 <th><h5>PLACAS</h5></th>
-                                <th><h5>FOLIO VEHICULAR</h5></th>
+                                <th><h5>TRANSPORTE</h5></th>
+                                <th><h5>OPERADOR</h5></th>
                                 <th><h5>CLIENTE</h5></th>
                                 <th><h5>DESTINO</h5></th>
                                 <th><h5>ZONA</h5></th>
-                                <th><h5>FECHA Y HORA CITA DE ENTREGA</h5></th>
-                                <th><h5>TIPO DE PEDIDO</h5></th>
-                                <th><h5>VELOCIDAD DE PEDIDO</h5></th>
-                                <th><h5>PIEZA</h5></th>
-                                <th><h5>FECHA Y HORA DE LLEGADA A DESCARGA	</h5></th>
-                                <th><h5>ON TIME CON CLIENTE	</h5></th>
-                                <th><h5>ESTATUS DE ENTREGA</h5></th>
-                                <th><h5>PROMOCIONAL</h5></th>
-                                <th><h5>OBSERVACIONES</h5></th>
-                                <th><h5>CONFIRMACION</h5></th>
-                                <th><h5>FECHA Y HORA DE FINALIZACION</h5></th>
-                                <th><h5>QUIEN REGISTRA</h5></th>
-                                <th><h5>FECHA DE REGISTRO O MODIFICACION</h5></th>
+                                <th><h5>TIPO DE PEDIDO </h5></th>
+                                <th><h5>CAJAS</h5></th>
+                                <th><h5>PIEZAS</h5></th>
+                                <th><h5>FECHA Y HORA DE CARGA PROGRAMADA</h5></th>
+                                <th><h5>FECHA Y HORA DE CARGA REAL</h5></th>
+                                <th><h5>FECHA Y HORA DE LLEAGDA DE LA UNIDAD</h5></th>
+                                <th><h5>OT LLEGADA A CARGA</h5></th>
+                                <th><h5>FEHA Y HORA DE INICIO DE CARGA</h5></th>
+                                <th><h5>FEHA Y HORA DE FIN DE CARGA</h5></th>
+                                <th><h5>OT DE CARGA</h5></th>
+                                <th><h5>FECHA Y HORA DE LIMITE DE SALIDA DE SITIO</h5></th>
+                                <th><h5>FECHA Y HORA DE CITA DE ENTREGA</h5></th>
+                                <th><h5>FECHA Y HORA DE ENTREGA REAL</h5></th>
+                                <th><h5>OT DE ENTREGA</h5></th>
+                                <th><h5>ESTATUS</h5></th>
+                                <th><h5>OBSERVACIONES EN EL EMBARQUE</h5></th>
+                                <th><h5>OBSERVACIONES EN LA ENTREGA</h5></th>
+                                <th><h5>INCI. ARRIBO A CARGA (TRANSPORTE)</h5></th>
+                                <th><h5>INCI. ARRIBO A CLIENTE (TRANSPORTE)</h5></th>
+                                <th><h5>INC. EN EMBARQUE (ALMACEN)</h5></th>
+                                <th><h5>INDICADORES DE RUTAS EXTRA</h5></th>
+                                <th><h5>SINIESTROS EN RUTA</h5></th>
+                                <th><h5>INDICADORES TIEMPO EN CARRETERA</h5></th>
                                 <th><h5>Actualizar </h5></th>
                                 <th><h5>Eliminar</h5></th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -112,30 +121,38 @@
                                     <td><p>@item.IdOrders</p></td>
                                     <td><p>@item.SiteLoading</p></td>
                                     <td><p>@item.OrdersDelivery</p></td>
+                                    <td><p>@item.IdTypeOrdersNavigation.Promotion </p></td>
+                                    <td><p>@item.IdTransportNavigation.UnitType</p></td>
+                                    <td><p>@item.IdTransportNavigation.Plate</p></td>
+                                    <td><p>@item.IdTransportNavigation.TransportName</p></td>
+                                    <td><p>@item.IdTransportistNavigation.NameTransportist </td>
+                                    <td><p>@item.IdClientNavigation.ClientName </p></td>
+                                    <td><p>@item.Destination </p></td>
+                                    <td><p>@item.IdTypeOrdersNavigation.LocalForaneo</p></td>
+                                    <td><p>@item.IdTypeOrdersNavigation.Clasification </p></td>
+                                    <td><p>@item.Boxes</p></td>
+                                    <td><p>@item.Pieces</p></td>
                                     <td><p>@item.DtAppointedForShipment </p></td>
                                     <td><p>@item.DtOfBoarding</p></td>
+                                    <td><p>@item.DtOfFarrivalOfUnit</p></td>
                                     <td><p>@item.OtOfBoarding</p></td>
-                                    <td><p>@item.IdTransportistNavigation.NameTransportist</p></td>
-                                    <td><p>@item.IdTransportNavigation.TransportName </td>
-                                    <td><p>@item.IdTransportNavigation.UnitType </p></td>
-                                    <td><p>@item.IdTransportNavigation.Plate </p></td>
-                                    <td><p>@item.VehicleControl</p></td>
-                                    <td><p>@item.IdClientNavigation.ClientName </p></td>
-                                    <td><p>@item.Destination</p></td>
-                                    <td><p>@item.IdTypeOrdersNavigation.LocalForaneo</p></td>
+                                    <td><p>@item.DtOfChargingStart</p></td>
+                                    <td><p>@item.DtLoadingEnd</p></td>
+                                    <td><p>@item.OtOfChargingStart</p></td>
+                                    <td><p>@item.DtOfDepartureFromSite</p></td>
                                     <td><p>@item.DtDeliveryAppointment </p></td>
-                                    <td><p>@item.IdTypeOrdersNavigation.Clasification</p></td>
-                                    <td><p>@item.IdTypeOrdersNavigation.NormalOrFast</p></td>
-                                    <td><p>@item.Pieces</p></td>
                                     <td><p>@item.DtArrivalToUnload</p></td>
                                     <td><p>@item.OnTime</p></td>
                                     <td><p>@item.DeliveryStatus</p></td>
-                                    <td><p>@item.IdTypeOrdersNavigation.Promotion</p></td>
-                                    <td><p>@item.Obsevations </p></td>
-                                    <td><p>@item.Confirmation</p></td>
-                                    <td><p>@item.EndDateTime</p></td>
-                                    <td><p>@item.IdUsuarioNavigation.Nombre</p></td>
-                                    <td><p>@item.FechaRegistro</p></td>
+                                    <td><p>@item.ShippingObservations</p></td>
+                                    <td><p>@item.Obsevations</p></td>
+                                    <td><p>@item.IncidentOfArrivalCargoTr </p></td>
+                                    <td><p>@item.IncidentOfArrivalClientTr</p></td>
+                                    <td><p>@item.IncidentInShipmentWh</p></td>
+                                    <td><p>@item.RoadTimeIndicators</p></td>
+                                    <td><p>@item.AccidentInRoute</p></td>
+                                    <td><p>@item.RoadTimeIndicators</p></td>
+
                                     <td>
                                         <div class="action">
                                             <a class="text-primari mx-auto" asp-action="Order_Detalle" asp-controller="Order" asp-route-IdOrders="@item.IdOrders"> <i class="lni lni-pencil"></i></a>
@@ -302,4 +319,4 @@
 
         });
     </script>
-}                                         
+}                                   
