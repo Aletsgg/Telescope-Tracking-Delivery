@@ -209,7 +209,7 @@ namespace Telescope_Traking_Delivery.Controllers
                     Text = Client.ClientName,
                     Value = Client.IdClient.ToString()
 
-                
+
 
                 }).ToList(),
 
@@ -254,13 +254,13 @@ namespace Telescope_Traking_Delivery.Controllers
 
             }
 
-          
-      
+
+
 
             return View(oOrderVM);
         }
 
-        
+
         [Authorize(Roles = "1,2,3")]
         [HttpPost]
         public IActionResult Order_Detalle(OrderVM oOrderVM)
@@ -274,7 +274,7 @@ namespace Telescope_Traking_Delivery.Controllers
                 _DBcontext.Orders.Update(oOrderVM.oOrder);
             }
             _DBcontext.SaveChanges();
-            return RedirectToAction("Index","Order");
+            return RedirectToAction("Historial", "Order");
 
         }
 
@@ -304,7 +304,7 @@ namespace Telescope_Traking_Delivery.Controllers
 
 
         }
-        
+
         [Authorize(Roles = "1,2")]
         [HttpPost]
         public IActionResult Eliminar(Order oOrder)
@@ -313,7 +313,7 @@ namespace Telescope_Traking_Delivery.Controllers
             _DBcontext.Orders.Remove(oOrder);
             _DBcontext.SaveChanges();
 
-            return RedirectToAction("Index", "Order");
+            return RedirectToAction("Historial", "Order");
 
 
         }
@@ -340,122 +340,231 @@ namespace Telescope_Traking_Delivery.Controllers
         [HttpPost]
         public IActionResult MostrarDatos([FromForm] IFormFile ArchivoExcel)
         {
-            
-            Stream stream = ArchivoExcel.OpenReadStream();
-
-            IWorkbook MiExcel = null;
-
-            if (Path.GetExtension(ArchivoExcel.FileName) == ".xlsx")
+            // Validación de entrada
+            if (ArchivoExcel == null)
             {
-                MiExcel = new XSSFWorkbook(stream);
-            }
-            else
-            {
-                MiExcel = new HSSFWorkbook(stream);
+                return BadRequest("Archivo no proporcionado");
             }
 
-            ISheet HojaExcel = MiExcel.GetSheetAt(0);
-
-            int cantidadFilas = HojaExcel.LastRowNum;
-
-            List<OrderVM> lista = new List<OrderVM>();
-
-            for (int i = 1; i <= cantidadFilas; i++)
+            // Validación de extensión de archivo
+            string extension = Path.GetExtension(ArchivoExcel.FileName);
+            if (extension != ".xlsx" && extension != ".xls")
             {
+                return BadRequest("Tipo de archivo no soportado");
+            }
 
-                IRow fila = HojaExcel.GetRow(i);
+            try
+            {
+                Stream stream = ArchivoExcel.OpenReadStream();
 
-                lista.Add(new OrderVM
+                IWorkbook MiExcel = null;
+
+                if (extension == ".xlsx")
                 {
-                    SiteLoading = fila.GetCell(0, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    OrdersDelivery = fila.GetCell(1, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    DtAppointedForShipment = fila.GetCell(2, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    DtOfBoarding = fila.GetCell(3, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    OtOfBoarding = fila.GetCell(4, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    VehicleControl = fila.GetCell(5, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    Destination = fila.GetCell(6, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    DtDeliveryAppointment = fila.GetCell(7, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    Pieces = fila.GetCell(8, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    DtArrivalToUnload = fila.GetCell(9, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    OnTime = fila.GetCell(10, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    DeliveryStatus = fila.GetCell(11, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    Obsevations = fila.GetCell(12, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    IdClient = fila.GetCell(13, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    IdTypeOrders = fila.GetCell(14, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    IdTransport = fila.GetCell(15, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    IdTransportist = fila.GetCell(16, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    Confirmation = fila.GetCell(17, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    EndDateTime = fila.GetCell(18, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    IdUsuario = fila.GetCell(19, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    FechaRegistro = fila.GetCell(20, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                    MiExcel = new XSSFWorkbook(stream);
+                }
+                else
+                {
+                    MiExcel = new HSSFWorkbook(stream);
+                }
+
+                ISheet HojaExcel = MiExcel.GetSheetAt(0);
+
+                int cantidadFilas = HojaExcel.LastRowNum;
+
+                List<OrderVM> lista = new List<OrderVM>();
+
+                for (int i = 1; i <= cantidadFilas; i++)
+                {
+
+                    IRow fila = HojaExcel.GetRow(i);
+
+                    lista.Add(new OrderVM
+                    {
+                        SiteLoading = fila.GetCell(0, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        OrdersDelivery = fila.GetCell(1, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        DtAppointedForShipment = fila.GetCell(2, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        DtOfBoarding = fila.GetCell(3, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        DtOfFarrivalOfUnit = fila.GetCell(4, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        OtOfBoarding = fila.GetCell(5, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        DtOfChargingStart = fila.GetCell(6, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        DtLoadingEnd = fila.GetCell(7, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        OtOfChargingStart = fila.GetCell(8, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        DtOfDepartureFromSite = fila.GetCell(9, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        VehicleControl = fila.GetCell(10, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        Destination = fila.GetCell(11, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        DtDeliveryAppointment = fila.GetCell(12, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        Pieces = fila.GetCell(13, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        Boxes = fila.GetCell(14, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        DtArrivalToUnload = fila.GetCell(15, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        OnTime = fila.GetCell(16, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        DeliveryStatus = fila.GetCell(17, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        Obsevations = fila.GetCell(18, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        ShippingObservations = fila.GetCell(19, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        IncidentOfArrivalCargoTr = fila.GetCell(20, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        IncidentOfArrivalClientTr = fila.GetCell(21, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        IncidentInShipmentWh = fila.GetCell(22, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        ExtraRouteIndicator = fila.GetCell(23, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        AccidentInRoute = fila.GetCell(24, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        RoadTimeIndicators = fila.GetCell(25, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        IdClient = fila.GetCell(26, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        IdTypeOrders = fila.GetCell(27, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        IdTransport = fila.GetCell(28, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        IdTransportist = fila.GetCell(29, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        Confirmation = fila.GetCell(30, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        EndDateTime = fila.GetCell(31, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        IdUsuario = fila.GetCell(32, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        FechaRegistro = fila.GetCell(33, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
 
 
 
-                });
+                    });
+                }
+
+                // Cierre de recursos
+                stream.Close();
+
+                return StatusCode(StatusCodes.Status200OK, lista);
             }
-
-            return StatusCode(StatusCodes.Status200OK, lista);
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
-       
-        
+
+
+
         [Authorize(Roles = "1")]
         [HttpPost]
         public IActionResult EnviarDatos([FromForm] IFormFile ArchivoExcel)
         {
-            Stream stream = ArchivoExcel.OpenReadStream();
-
-            IWorkbook MiExcel = null;
-
-            if (Path.GetExtension(ArchivoExcel.FileName) == ".xlsx")
+            // Validación de entrada
+            if (ArchivoExcel == null)
             {
-                MiExcel = new XSSFWorkbook(stream);
-            }
-            else
-            {
-                MiExcel = new HSSFWorkbook(stream);
+                return BadRequest("Archivo no proporcionado");
             }
 
-            ISheet HojaExcel = MiExcel.GetSheetAt(0);
-
-            int cantidadFilas = HojaExcel.LastRowNum;
-            List<Order> lista = new List<Order>();
-
-            for (int i = 1; i <= cantidadFilas; i++)
+            // Validación de extensión de archivo
+            string extension = Path.GetExtension(ArchivoExcel.FileName);
+            if (extension != ".xlsx" && extension != ".xls")
             {
+                return BadRequest("Tipo de archivo no soportado");
+            }
 
-                IRow fila = HojaExcel.GetRow(i);
+            try
+            {
+                Stream stream = ArchivoExcel.OpenReadStream();
 
-                lista.Add(new Order
+                IWorkbook MiExcel = null;
+
+                if (extension == ".xlsx")
                 {
-                    SiteLoading = fila.GetCell(0, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    OrdersDelivery = fila.GetCell(1, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    DtAppointedForShipment = DateTime.Parse(fila.GetCell(2, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString()),
-                    DtOfBoarding = DateTime.Parse(fila.GetCell(3, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString()),
-                    OtOfBoarding = fila.GetCell(4, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    VehicleControl = fila.GetCell(5, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    Destination = fila.GetCell(6, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    DtDeliveryAppointment = DateTime.Parse(fila.GetCell(7, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString()),
-                    Pieces = int.Parse(fila.GetCell(8, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString()),
-                    DtArrivalToUnload = DateTime.Parse(fila.GetCell(9, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString()),
-                    OnTime = fila.GetCell(10, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    DeliveryStatus = fila.GetCell(11, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    Obsevations = fila.GetCell(12, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
-                    IdClient = int.Parse(fila.GetCell(13, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString()),
-                    IdTypeOrders = int.Parse(fila.GetCell(14, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString()),
-                    IdTransport = int.Parse(fila.GetCell(15, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString()),
-                    IdTransportist = int.Parse(fila.GetCell(16, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString()),
-                    Confirmation = DateTime.Parse( fila.GetCell(17, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString()),
-                    EndDateTime = DateTime.Parse(fila.GetCell(18, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString()),
-                    IdUsuario = int.Parse(fila.GetCell(19, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString()),
-                    FechaRegistro = DateTime.Parse( fila.GetCell(20, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString()),
+                    MiExcel = new XSSFWorkbook(stream);
+                }
+                else
+                {
+                    MiExcel = new HSSFWorkbook(stream);
+                }
 
-                });
+                ISheet HojaExcel = MiExcel.GetSheetAt(0);
+
+                int cantidadFilas = HojaExcel.LastRowNum;
+                List<Order> lista = new List<Order>();
+
+                for (int i = 1; i <= cantidadFilas; i++)
+                {
+
+                    IRow fila = HojaExcel.GetRow(i);
+
+                    // Conversión de fecha
+                    DateTime.TryParse(fila.GetCell(2, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out DateTime DtAppointedForShipment);
+                    DateTime.TryParse(fila.GetCell(3, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out DateTime DtOfBoarding);
+                    DateTime.TryParse(fila.GetCell(4, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out DateTime DtOfFarrivalOfUnit);
+                    DateTime.TryParse(fila.GetCell(6, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out DateTime DtOfChargingStart);
+                    DateTime.TryParse(fila.GetCell(7, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out DateTime DtLoadingEnd);
+                    DateTime.TryParse(fila.GetCell(9, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out DateTime DtOfDepartureFromSite);
+                    DateTime.TryParse(fila.GetCell(12, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out DateTime DtDeliveryAppointment);
+                    DateTime.TryParse(fila.GetCell(15, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out DateTime DtArrivalToUnload);
+                    DateTime.TryParse(fila.GetCell(30, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out DateTime Confirmation);
+                    DateTime.TryParse(fila.GetCell(31, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out DateTime EndDateTime);
+                    DateTime.TryParse(fila.GetCell(33, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out DateTime FechaRegistro);
+
+
+                    int.TryParse(fila.GetCell(13, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out int Pieces);
+                    int.TryParse(fila.GetCell(14, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out int Boxes);
+                    int.TryParse(fila.GetCell(26, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out int IdClient);
+                    int.TryParse(fila.GetCell(27, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out int IdTypeOrders);
+                    int.TryParse(fila.GetCell(28, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out int IdTransport);
+                    int.TryParse(fila.GetCell(29, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out int IdTransportist);
+                    int.TryParse(fila.GetCell(32, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(), out int IdUsuario);
+
+
+                    lista.Add(new Order
+                    {
+                        SiteLoading = fila.GetCell(0, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        OrdersDelivery = fila.GetCell(1, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        DtAppointedForShipment = DtAppointedForShipment,
+                        DtOfBoarding = DtOfBoarding,
+                        DtOfFarrivalOfUnit = DtOfFarrivalOfUnit,
+                        OtOfBoarding = fila.GetCell(5, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        DtOfChargingStart = DtOfChargingStart,
+                        DtLoadingEnd = DtLoadingEnd,
+                        OtOfChargingStart = fila.GetCell(8, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        DtOfDepartureFromSite = DtOfDepartureFromSite,
+                        VehicleControl = fila.GetCell(10, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        Destination = fila.GetCell(11, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),                    
+                        DtDeliveryAppointment = DtDeliveryAppointment,
+                        Pieces = Pieces,
+                        Boxes = Boxes,
+                        DtArrivalToUnload = DtArrivalToUnload,
+                        OnTime = fila.GetCell(16, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        DeliveryStatus = fila.GetCell(17, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        Obsevations = fila.GetCell(18, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        ShippingObservations = fila.GetCell(19, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        IncidentOfArrivalCargoTr = fila.GetCell(20, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        IncidentOfArrivalClientTr = fila.GetCell(21, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        IncidentInShipmentWh = fila.GetCell(22, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        ExtraRouteIndicator = fila.GetCell(23, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        AccidentInRoute = fila.GetCell(24, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        RoadTimeIndicators = fila.GetCell(25, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString(),
+                        IdClient = IdClient, 
+                        IdTypeOrders = IdTypeOrders,
+                        IdTransport = IdTransport,
+                        IdTransportist = IdTransportist,
+                        Confirmation = Confirmation,
+                        EndDateTime = EndDateTime,
+                        IdUsuario = IdUsuario,
+                        FechaRegistro = FechaRegistro,
+
+                    });
+                }
+
+                // Cierre de recursos
+                stream.Close();
+
+                // Inserción masiva
+                try
+                {
+                    _DBcontext.BulkInsert(lista);
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                }
+
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok" });
             }
-
-            _DBcontext.BulkInsert(lista);
-
-            return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok" });
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
+
+
+
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
