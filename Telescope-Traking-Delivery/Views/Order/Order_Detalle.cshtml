@@ -12,164 +12,209 @@
 }
 
 
-<div class="form-elements-wrapper fa-align-center">
+<div class="card">
+    <div class="card-body">
 
-    <div class="row">
 
-        <div class="col-lg-6">
 
-            <!-- input style start -->
-            <div class="card-style mb-30">
+        <!-- Multi Columns Form -->
+        @if (Model.oOrder.IdOrders == 0)
+        {
+            <h6 class="col-md-65">Crear Una nuevo Pedido</h6>
+        }
+        else
+        {
+            <h6 class="col-md-65"> Editar el Pedido</h6>
+        }
+
+        <form class="row g-3" asp-action="Order_Detalle" asp-controller="Order" method="post">
+            <input type="hidden" asp-for="oOrder.IdOrders" />
+
+            <div class="col-md-6">
+                <label class="form-label" asp-for="oOrder.SiteLoading">SITIO DE CARGA</label>
+                <select class="form-select form-select-sm" asp-for="oOrder.SiteLoading" required>
+                    <option>DHL MACROCENTRO</option>
+                    <option>OTRO</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="oOrder.OrdersDelivery">ENTREGA / VALE</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.OrdersDelivery" type="text" required />
+            </div>
+            <div class="col-md-6  ui-datepicker">
+                <label class="form-label" asp-for="oOrder.DtAppointedForShipment">FECHA Y HORA DE CARGA PROGRAMADA</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.DtAppointedForShipment" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+            </div>
+            <div class="col-md-6 ui-datepicker">
+                <label class="form-label" asp-for="oOrder.DtOfBoarding">FECHA Y HORA DE CARGA REAL</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.DtOfBoarding" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+            </div>
+            <div class="col-md-6  ui-datepicker">
+                <label class="form-label" asp-for="oOrder.DtOfFarrivalOfUnit">FECHA Y HORA DE LLEAGDA DE LA UNIDAD</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.DtOfFarrivalOfUnit" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="oOrder.OtOfBoarding">OT LLEGADA A CARGA</label>
+                <select class="form-select form-select-sm" asp-for="oOrder.OtOfBoarding" required>
+                    <option>ON TIME</option>
+                    <option>OFF TIME</option>
+                    <option>N/A</option>
+                </select>
+            </div>
+            <div class="col-md-4 ui-datepicker">
+                <label class="form-label" asp-for="oOrder.DtOfChargingStart">FEHA Y HORA DE INICIO DE CARGA</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.DtOfChargingStart" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+            </div>
+            <div class="col-md-4 ui-datepicker">
+                <label class="form-label" asp-for="oOrder.DtLoadingEnd">FEHA Y HORA DE FIN DE CARGA</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.DtLoadingEnd" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" asp-for="oOrder.OtOfChargingStart">OT DE CARGA</label>
+                <select class="form-select form-select-sm" asp-for="oOrder.OtOfChargingStart" required>
+                    <option>ON TIME</option>
+                    <option>OFF TIME</option>
+                    <option>N/A</option>
+                </select>
+            </div>
+            <div class="col-md-6 ui-datepicker">
+                <label class="form-label" asp-for="oOrder.DtOfDepartureFromSite">FECHA Y HORA DE LIMITE DE SALIDA DE SITIO</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.DtOfDepartureFromSite" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="oOrder.VehicleControl">FOLIO VEHICULAR</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.VehicleControl" type="text" />
+            </div>
+            <div class="col-md-8">
+                <label class="form-label" asp-for="oOrder.Destination">DESTINO</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.Destination" type="text" required />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" asp-for="oOrder.DtDeliveryAppointment">FECHA Y HORA DE CITA DE ENTREGA</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.DtDeliveryAppointment" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label" for="typeNumber" asp-for="oOrder.Pieces">PIEZAS</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.Pieces" type="number" id="typeNumber" value="0" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label" for="typeNumber" asp-for="oOrder.Boxes">CAJAS</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.Boxes" type="number" id="typeNumber" value="0" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" asp-for="oOrder.DtArrivalToUnload">FECHA Y HORA DE ENTREGA REAL</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.DtArrivalToUnload" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label" asp-for="oOrder.OnTime">OT DE ENTREGA</label>
+                <select class="form-select form-select-sm" asp-for="oOrder.OnTime" required>
+                    <option>ON TIME</option>
+                    <option>OFF TIME</option>
+                    <option>N/A</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="oOrder.DeliveryStatus">ESTATUS DEL PEDIDO</label>
+                <select class="form-select form-select-sm" asp-for="oOrder.DeliveryStatus" required>
+                    <option>ENTREGADO</option>
+                    <option>CANCELADO</option>
+                    <option>ENTRAGADO CON FALTANTE</option>
+                    <option>RECHAZADO</option>
+                    <option>RECHAZADO PARCIAL</option>
+                    <option>ENTRAGADO CON FALTANTE</option>
+                </select>
+
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="oOrder.Obsevations">OBSERVACIONES EN LA ENTREGA</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.Obsevations" type="text" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="oOrder.ShippingObservations">OBSERVACIONES EN EL EMBARQUE</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.ShippingObservations" type="text" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="oOrder.IncidentOfArrivalCargoTr">INCI. ARRIBO A CARGA (TRANSPORTE)</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.IncidentOfArrivalCargoTr" type="text" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="oOrder.IncidentOfArrivalClientTr">>INCI. ARRIBO A CLIENTE (TRANSPORTE)</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.IncidentOfArrivalClientTr" type="text" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="oOrder.IncidentInShipmentWh">INC. EN EMBARQUE (ALMACEN)</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.IncidentInShipmentWh" type="text" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="oOrder.ExtraRouteIndicator">INDICADORES DE RUTAS EXTRA</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.ExtraRouteIndicator" type="text" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="oOrder.AccidentInRoute">SINIESTROS EN RUTA</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.AccidentInRoute" type="text" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="oOrder.RoadTimeIndicators">INDICADORES TIEMPO EN CARRETERA</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.RoadTimeIndicators" type="text" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label" asp-for="oOrder.IdClient">CLIENTE</label>
+                <select class="form-select form-select-sm" asp-for="oOrder.IdClient" asp-items="@Model.oListaClient" required>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label" asp-for="oOrder.IdTypeOrders">TIPO DE PEDIDO</label>
+                <select class="form-select form-select-sm" asp-for="oOrder.IdTypeOrders" asp-items="@Model.oListaTypeOrder" required>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label" asp-for="oOrder.IdTransport">TRANSPORTE</label> <br />
+                <select class="form-select form-select-sm" asp-for="oOrder.IdTransport" asp-items="@Model.oListaTransport" required>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label" asp-for="oOrder.IdTransportist">OPERADOR</label>
+                <select class="form-select form-select-sm" asp-for="oOrder.IdTransportist" asp-items="@Model.oListaTransportist" required>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="oOrder.Confirmation">Fecha y Hora/ Confirmacion</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.Confirmation" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="oOrder.EndDateTime">FEHA Y HORA DE FIN DE CARGA</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.EndDateTime" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="oOrder.IdUsuario">Usuario que registro</label>
+                <select class="form-select form-select-sm" asp-for="oOrder.IdUsuario">
+                    <option value="@ViewData["IdUsuario"]"> @ViewData["nombreUsuario"]</option>
+                </select>
+            </div>
+            <div class="col-md-6" hidden>
+                <label class="form-label" asp-for="oOrder.FechaRegistro">Fecha de registro</label>
+                <input class="form-control form-control-sm" asp-for="oOrder.FechaRegistro" type="datetime" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+            </div>
+
+            <div class="col-md-6">
 
                 @if (Model.oOrder.IdOrders == 0)
                 {
-                    <h6 class="input-style-25">Crear Una nuevo Pedido</h6>
+                    <button class="btn btn-primary btn-sm w-45" type="submit">Crear</button>
                 }
                 else
                 {
-                    <h6 class="input-style-25"> Editar el Pedido</h6>
+                    <button class="btn btn-primary btn-sm w-45" type="submit">Actualizar</button>
+
                 }
-
-                <form asp-action="Order_Detalle" asp-controller="Order" method="post">
-                    <input type="hidden" asp-for="oOrder.IdOrders" />
-
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.SiteLoading">Sitio de Carga</label>
-                        <select class="form-select form-select-sm" asp-for="oOrder.SiteLoading" required>
-                            <option>DHL MACROCENTRO</option>
-                            <option>OTRO</option>
-                        </select>
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.OrdersDelivery">Pedido/Delivery</label>
-                        <input class="form-control form-control-sm" asp-for="oOrder.OrdersDelivery" type="text" required />
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.DtAppointedForShipment">Fecha y Hora/Citado a Embarque </label>
-                        <input class="form-control form-control-sm" asp-for="oOrder.DtAppointedForShipment" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
-                    </div>
-                    <div class="input-style-2 ui-datepicker">
-                        <label class="form-label" asp-for="oOrder.DtOfBoarding">Fecha y Hora/ Embarque</label>
-                        <input class="form-control form-control-sm" asp-for="oOrder.DtOfBoarding" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.OtOfBoarding">OT de Embarque</label>
-                        <select class="form-select form-select-sm" asp-for="oOrder.OtOfBoarding" required>
-                            <option>ON TIME</option>
-                            <option>OFF TIME</option>
-                        </select>
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.VehicleControl">Folio Vehicular</label>
-                        <input class="form-control form-control-sm" asp-for="oOrder.VehicleControl" type="text" />
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.Destination">Destino</label>
-                        <input class="form-control form-control-sm" asp-for="oOrder.Destination" type="text" required />
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.DtDeliveryAppointment">Fecha y Hora/Cita de Entrega</label>
-                        <input class="form-control form-control-sm" asp-for="oOrder.DtDeliveryAppointment" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" for="typeNumber" asp-for="oOrder.Pieces">Piezas</label>
-                        <input class="form-control form-control-sm" asp-for="oOrder.Pieces" type="number" id="typeNumber" value="0" />
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.DtArrivalToUnload">Fecha y Hora/ LLeagda a Descarga</label>
-                        <input class="form-control form-control-sm" asp-for="oOrder.DtArrivalToUnload" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.OnTime">On Time</label>
-                        <select class="form-select form-select-sm" asp-for="oOrder.OnTime" required>
-                            <option>ON TIME</option>
-                            <option>OFF TIME</option>
-                            <option>N/A</option>
-                        </select>
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.DeliveryStatus">Estatus de Pedido</label>
-                        <select class="form-select form-select-sm" asp-for="oOrder.DeliveryStatus" required>
-                            <option>ENTREGADO</option>
-                            <option>CANCELADO</option>
-                            <option>ENTRAGADO CON FALTANTE</option>
-                            <option>RECHAZADO</option>
-                            <option>RECHAZADO PARCIAL</option>
-                            <option>ENTRAGADO CON FALTANTE</option>
-                        </select>
-
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.Obsevations">Observaciones</label>
-                        <input class="form-control form-control-sm" asp-for="oOrder.Obsevations" type="text" />
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.IdClient">Cliente</label>
-                        <select class="form-select form-select-sm" asp-for="oOrder.IdClient" asp-items="@Model.oListaClient" required>
-                        </select>
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.IdTypeOrders">Tipo de Pedido</label>
-                        <select class="form-select form-select-sm" asp-for="oOrder.IdTypeOrders" asp-items="@Model.oListaTypeOrder" required>
-                        </select>
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.IdTransport"> Transporte</label> <br />
-                        <select class="form-select form-select-sm" asp-for="oOrder.IdTransport" asp-items="@Model.oListaTransport" required>
-                        </select>
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.IdTransportist">Transportista</label>
-                        <select class="form-select form-select-sm" asp-for="oOrder.IdTransportist" asp-items="@Model.oListaTransportist" required>
-                        </select>
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.Confirmation">Fecha y Hora/ Confirmacion</label>
-                        <input class="form-control form-control-sm" asp-for="oOrder.Confirmation" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.EndDateTime">Fecha y Hora/Termino</label>
-                        <input class="form-control form-control-sm" asp-for="oOrder.EndDateTime" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
-                    </div>
-                    <div class="input-style-2">
-                        <label class="form-label" asp-for="oOrder.IdUsuario">Operador que registra</label>
-                        <select class="form-select form-select-sm" asp-for="oOrder.IdUsuario">
-                            <option value="@ViewData["IdUsuario"]"> @ViewData["nombreUsuario"]</option>
-                        </select>
-                    </div>
-                    <div class="input-style-2" hidden>
-                        <label class="form-label" asp-for="oOrder.FechaRegistro">Fecha y Hora/Punto de Carga</label>
-                        <input class="form-control form-control-sm" asp-for="oOrder.FechaRegistro" type="datetime" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
-                    </div>
-
-                    <div class="input-style-2">
-
-                        @if (Model.oOrder.IdOrders == 0)
-                        {
-                            <button class="btn btn-primary btn-sm w-45" type="submit">Crear</button>
-                        }
-                        else
-                        {
-                            <button class="btn btn-primary btn-sm w-45" type="submit">Actualizar</button>
-
-                        }
-                        <a class="btn btn-dark btn-sm" asp-action="Index" asp-controller="Order">Volver</a>
-
-                    </div>
-
-                </form>
-
-
+                <a class="btn btn-dark btn-sm" asp-action="Index" asp-controller="Order">Volver</a>
 
             </div>
 
-        </div>
-
+        </form>
     </div>
 
 </div>
-
-
 
 @section Scripts{
 
