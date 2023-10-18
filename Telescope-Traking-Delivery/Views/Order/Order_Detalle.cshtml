@@ -20,13 +20,20 @@
         <!-- Multi Columns Form -->
         @if (Model.oOrder.IdOrders == 0)
         {
-            <h6 class="col-md-65">Crear Una nuevo Pedido</h6>
+            <div class="d-flex justify-content-center">
+                <h2 class="col-md-65">Crear Una nuevo Pedido</h2>
+            </div>
+
         }
         else
         {
-            <h6 class="col-md-65"> Editar el Pedido</h6>
+            <div class="d-flex justify-content-center">
+                <h2 class="col-md-65"> Editar el Pedido</h2>
+            </div>
+            
+           
         }
-
+        <br />
         <form class="row g-3" asp-action="Order_Detalle" asp-controller="Order" method="post">
             <input type="hidden" asp-for="oOrder.IdOrders" />
 
@@ -116,6 +123,7 @@
             <div class="col-md-6">
                 <label class="form-label" asp-for="oOrder.DeliveryStatus">ESTATUS DEL PEDIDO</label>
                 <select class="form-select form-select-sm" asp-for="oOrder.DeliveryStatus" required>
+                    <option>PROCESO</option>
                     <option>ENTREGADO</option>
                     <option>CANCELADO</option>
                     <option>ENTRAGADO CON FALTANTE</option>
@@ -138,7 +146,7 @@
                 <input class="form-control form-control-sm" asp-for="oOrder.IncidentOfArrivalCargoTr" type="text" />
             </div>
             <div class="col-md-6">
-                <label class="form-label" asp-for="oOrder.IncidentOfArrivalClientTr">>INCI. ARRIBO A CLIENTE (TRANSPORTE)</label>
+                <label class="form-label" asp-for="oOrder.IncidentOfArrivalClientTr">INCI. ARRIBO A CLIENTE (TRANSPORTE)</label>
                 <input class="form-control form-control-sm" asp-for="oOrder.IncidentOfArrivalClientTr" type="text" />
             </div>
             <div class="col-md-6">

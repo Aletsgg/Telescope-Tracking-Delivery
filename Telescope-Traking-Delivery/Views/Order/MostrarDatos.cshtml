@@ -27,25 +27,39 @@
 
                     <thead>
                         <tr>
-                            <th>SITE(Carga)</th>
-                            <th>PEDIDO/DELIVERY</th>
-                            <th>FECHA Y HORA CITADO A EMBARQUE</th>
-                            <th>FECHA Y HORA DE EMBARQUE</th>
-                            <th>OT DE EMBARQUE</th>
-                            <th>CONTROL VEHICULAR</th>
-                            <th>DESTINO</th>
-                            <th>FECHA Y HORA CITA DE ENTREGA</th>
-                            <th>PIEZAS</th>
-                            <th>FECHA Y HORA DE LLEGADA A DESCARGA	</th>
-                            <th>ON TIME CON CLIENTE	</th>
-                            <th>ESTATUS DE ENTREGA</th>
-                            <th>OBSERVACIONES</th>
-                            <th>CLIENTE</th>
-                            <th>TIPO DE PEDIDO</th>
-                            <th>TRANSPORTE</th>
-                            <th>TRANPORTISTA</th>
-                            <th>CONFIRMACION</th>
-                            <th>FECHA Y HORA DE FINALIZACION</th>
+                            <th> SITE(Carga) </th>
+                            <th> ENTREGA / VALE </th>
+                            <th> VENTA / PROMO </th>                           
+                            <th> FECHA Y HORA DE CARGA PROGRAMADA </th>
+                            <th> FECHA Y HORA DE CARGA REAL </th>
+                            <th> FECHA Y HORA DE LLEAGDA DE LA UNIDAD </th>
+                            <th> OT LLEGADA A CARGA </th>
+                            <th> FEHA Y HORA DE INICIO DE CARGA </th>
+                            <th> FEHA Y HORA DE FIN DE CARGA </th>
+                            <th> OT DE CARGA </th>
+                            <th> FECHA Y HORA DE LIMITE DE SALIDA DE SITIO </th>
+                            <th> FOLIO VEHICULAR</th>
+                            <th> DESTINO</th>
+                            <th> FECHA Y HORA DE CITA DE ENTREGA </th>
+                            <th> PIEZAS</th>
+                            <th> CAJAS</th>
+                            <th> FECHA Y HORA DE ENTREGA REAL </th>
+                            <th> OT DE ENTREGA </th>
+                            <th> ESTATUS </th>
+                            <th> OBSERVACIONES EN EL EMBARQUE </th>
+                            <th> OBSERVACIONES EN LA ENTREGA </th>
+                            <th> INCI. ARRIBO A CARGA (TRANSPORTE) </th>
+                            <th> INCI. ARRIBO A CLIENTE (TRANSPORTE) </th>
+                            <th> INC. EN EMBARQUE (ALMACEN) </th>
+                            <th> INDICADORES DE RUTAS EXTRA </th>
+                            <th> SINIESTROS EN RUTA </th>
+                            <th> INDICADORES TIEMPO EN CARRETERA </th>
+                            <th> ID CLIENTE</th>
+                            <th> ID TIPO DE PEDIDO</th>
+                            <th> ID TRANSPORTE</th>
+                            <th> ID PERADOR</th>
+                            <th> CONFIRMACION</th>
+                            <th> FECHA Y HORA DE FINALIZACION</th>
                             <th>QUIEN REGISTRA</th>
                             <th>FECHA Y HORA DE REGISTRO</th>
                         </tr>
@@ -89,15 +103,29 @@
                                 $("<td>").text(item.ordersDelivery),
                                 $("<td>").text(item.dtAppointedForShipment),
                                 $("<td>").text(item.dtOfBoarding),
+                                $("<td>").text(item.dtOfFarrivalOfUnit),
                                 $("<td>").text(item.otOfBoarding),
+                                $("<td>").text(item.dtOfChargingStart),
+                                $("<td>").text(item.otLoadingEnd),
+                                $("<td>").text(item.otOfChargingStart),
+                                $("<td>").text(item.dtOfDepartureFromSite),
                                 $("<td>").text(item.vehicleControl),
                                 $("<td>").text(item.destination),
                                 $("<td>").text(item.dtDeliveryAppointment),
                                 $("<td>").text(item.pieces),
+                                $("<td>").text(item.boxes),
                                 $("<td>").text(item.dtArrivalToUnload),
                                 $("<td>").text(item.onTime),
                                 $("<td>").text(item.deliveryStatus),
                                 $("<td>").text(item.obsevations),
+                                $("<td>").text(item.shippingObservations),
+                                $("<td>").text(item.incidentOfArrivalCargoTr),
+                                $("<td>").text(item.incidentOfArrivalClientTr),
+                                $("<td>").text(item.incidentInShipmentWh),
+                                $("<td>").text(item.extraRouteIndicator),
+                                $("<td>").text(item.accidentInRoute),
+                                $("<td>").text(item.shippingObservations),
+                                $("<td>").text(item.roadTimeIndicators),        
                                 $("<td>").text(item.idClient),
                                 $("<td>").text(item.idTypeOrders),
                                 $("<td>").text(item.idTransport),
